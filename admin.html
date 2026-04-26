@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORBUX Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#2e7cbf;--azul-o:#1a4f7a;--negro:#080c10;--negro2:#0f1419;--negro3:#161d25;--gris:#8a9ab0;--blanco:#f0ede8;--dorado:#c9a84c;--verde:#4a9e5c;--rojo:#c0392b;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--negro);color:var(--blanco);font-family:'Lato',sans-serif;font-weight:300;}
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.login-box{background:var(--negro2);border:1px solid rgba(46,124,191,0.2);padding:3rem;width:100%;max-width:400px;}
+.login-box h1{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px;color:var(--azul);margin-bottom:0.5rem;}
+.login-box p{font-size:13px;color:var(--gris);margin-bottom:2rem;}
+.fg{margin-bottom:1rem;}
+.fg label{display:block;font-size:11px;letter-spacing:2px;color:var(--gris);text-transform:uppercase;margin-bottom:6px;}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--negro3);border:1px solid rgba(46,124,191,0.2);color:var(--blanco);padding:10px 14px;font-size:13px;font-family:'Lato',sans-serif;resize:vertical;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--azul);}
+.fg select option{background:var(--negro3);}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.hint{font-size:11px;color:var(--gris);margin-top:4px;line-height:1.5;}
+.btn{padding:10px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;font-weight:700;border:none;transition:all 0.2s;}
+.btn-primary{background:var(--azul);color:#fff;}
+.btn-primary:hover{background:var(--azul-o);}
+.btn-danger{background:var(--rojo);color:#fff;}
+.btn-outline{background:transparent;color:var(--azul);border:1px solid var(--azul);}
+.btn-outline:hover{background:var(--azul);color:#fff;}
+.btn-sm{padding:7px 14px;font-size:10px;}
+.btn-block{width:100%;padding:12px;}
+.error-msg{color:#e74c3c;font-size:13px;margin-top:1rem;display:none;}
+#adminPanel{display:none;min-height:100vh;}
+.admin-nav{background:var(--negro2);border-bottom:1px solid rgba(46,124,191,0.2);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.admin-nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--azul);}
+.admin-tabs{display:flex;border-bottom:1px solid rgba(46,124,191,0.15);background:var(--negro3);padding:0 2rem;}
+.admin-tab{padding:1rem 1.5rem;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gris);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;font-family:'Lato',sans-serif;transition:all 0.2s;}
+.admin-tab.active{color:var(--azul);border-bottom-color:var(--azul);}
+.admin-content{padding:2rem;max-width:1100px;margin:0 auto;}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+.stat-card{background:var(--negro3);border:1px solid rgba(46,124,191,0.1);padding:1.5rem;}
+.stat-card .num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--azul);}
+.stat-card .lbl{font-size:10px;letter-spacing:2px;color:var(--gris);text-transform:uppercase;}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.section-hdr h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;}
+.proyecto-item{background:var(--negro2);border:1px solid rgba(46,124,191,0.1);padding:1.5rem;margin-bottom:1rem;}
+.proyecto-item-hdr{display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem;gap:1rem;flex-wrap:wrap;}
+.proyecto-item h3{font-size:16px;font-weight:700;}
+.proyecto-item .meta{font-size:12px;color:var(--gris);margin-top:2px;}
+.proyecto-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.fotos-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:1rem;}
+.foto-wrap{position:relative;}
+.foto-thumb{width:80px;height:60px;object-fit:cover;border:1px solid rgba(46,124,191,0.2);}
+.foto-del{position:absolute;top:2px;right:2px;background:rgba(192,57,43,0.9);border:none;color:#fff;width:18px;height:18px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.foto-cat{display:block;width:80px;background:rgba(46,124,191,0.15);border:none;color:var(--gris);font-size:9px;padding:2px 4px;cursor:pointer;font-family:'Lato',sans-serif;margin-top:2px;}
+.foto-cat:focus{outline:none;}
+.upload-zone{margin-bottom:1rem;border:1px solid rgba(46,124,191,0.15);border-radius:6px;overflow:hidden;}
+.upload-zone-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(46,124,191,0.08);}
+.upload-zone-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blanco);}
+.upload-zone-btn{background:var(--azul);color:#fff;border:none;padding:6px 14px;font-size:11px;letter-spacing:1px;cursor:pointer;font-family:'Lato',sans-serif;font-weight:700;text-transform:uppercase;border-radius:4px;}
+.upload-zone-btn:hover{background:var(--azul-o);}
+.upload-zone-fotos{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;min-height:40px;}
+.upload-zone-fotos .foto-wrap{position:relative;}
+.upload-zone-fotos .foto-thumb{width:72px;height:54px;object-fit:cover;border-radius:4px;}
+.upload-zone-fotos .foto-del{position:absolute;top:2px;right:2px;background:rgba(192,57,43,0.9);border:none;color:#fff;width:16px;height:16px;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:2px;}
+.upload-progress{font-size:11px;color:var(--dorado);padding:0 14px 10px;letter-spacing:1px;display:none;}
+.upload-zone{margin-bottom:1rem;}
+.link-micrositio{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(46,124,191,0.1);font-size:11px;color:var(--gris);}
+.link-micrositio a{color:var(--azul);}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999;overflow-y:auto;padding:2rem;}
+.modal-overlay.open{display:block;}
+.modal{background:var(--negro2);border:1px solid rgba(46,124,191,0.2);padding:2rem;width:100%;max-width:720px;margin:0 auto;}
+.modal h3{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;margin-bottom:1.5rem;}
+.modal-section{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(46,124,191,0.1);}
+.modal-section:last-of-type{border-bottom:none;margin-bottom:0;}
+.msec-title{font-size:11px;letter-spacing:3px;color:var(--dorado);text-transform:uppercase;margin-bottom:1rem;}
+.modal-btns{display:flex;gap:1rem;justify-content:flex-end;margin-top:1.5rem;}
+.chk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;}
+.chk-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gris);cursor:pointer;padding:8px 10px;border:1px solid rgba(46,124,191,0.1);transition:all 0.2s;user-select:none;}
+.chk-item:hover{border-color:rgba(46,124,191,0.3);}
+.chk-item input{accent-color:var(--azul);width:14px;height:14px;flex-shrink:0;}
+.chk-item.on{border-color:var(--azul);color:var(--blanco);background:rgba(46,124,191,0.08);}
+.aloj-list{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.aloj-item{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;}
+.aloj-item input{background:var(--negro3);border:1px solid rgba(46,124,191,0.2);color:var(--blanco);padding:8px 12px;font-size:12px;font-family:'Lato',sans-serif;}
+.aloj-del{background:none;border:1px solid rgba(192,57,43,0.3);color:var(--rojo);padding:8px 10px;cursor:pointer;font-size:11px;font-family:'Lato',sans-serif;transition:all 0.2s;}
+.aloj-del:hover{background:rgba(192,57,43,0.1);}
+.color-opts{display:flex;gap:8px;margin-top:8px;}
+.temas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;}
+.tema-opt{display:flex;align-items:center;gap:6px;padding:8px 10px;border:1px solid rgba(46,124,191,0.1);cursor:pointer;border-radius:6px;transition:all 0.2s;}
+.tema-opt:hover{border-color:rgba(46,124,191,0.4);}
+.tema-opt.sel{border-color:var(--azul);background:rgba(46,124,191,0.1);}
+.tema-opt span{width:18px;height:18px;border-radius:50%;flex-shrink:0;}
+.tema-opt small{font-size:10px;color:var(--gris);letter-spacing:0.5px;line-height:1.3;}
+.tema-opt.sel small{color:var(--blanco);}
+.modulos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;}
+.mod-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gris);cursor:pointer;padding:8px 10px;border:1px solid rgba(46,124,191,0.1);transition:all 0.2s;}
+.mod-item:hover{border-color:rgba(46,124,191,0.3);}
+.mod-item input{accent-color:var(--azul);width:14px;height:14px;flex-shrink:0;}
+.mod-item.on{border-color:var(--azul);color:var(--blanco);background:rgba(46,124,191,0.08);}
+.msg-item{background:var(--negro2);border:1px solid rgba(46,124,191,0.1);border-left:3px solid var(--azul);padding:1.5rem;margin-bottom:1rem;}
+.msg-item.leido{border-left-color:rgba(46,124,191,0.2);opacity:0.6;}
+.msg-hdr{display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem;}
+.msg-nombre{font-weight:700;font-size:15px;}
+.msg-fecha{font-size:11px;color:var(--gris);}
+.msg-tags{display:flex;gap:6px;margin-bottom:0.75rem;flex-wrap:wrap;}
+.tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;background:rgba(46,124,191,0.1);border:1px solid rgba(46,124,191,0.2);color:var(--azul);}
+.msg-texto{font-size:13px;color:var(--gris);line-height:1.7;margin-bottom:1rem;}
+.msg-contacto{font-size:13px;color:var(--dorado);}
+.loading{text-align:center;padding:3rem;color:var(--gris);font-size:12px;letter-spacing:2px;}
+.empty{text-align:center;padding:3rem;color:var(--gris);font-size:13px;}
+.badge{background:var(--azul);color:#fff;font-size:10px;padding:2px 8px;letter-spacing:1px;margin-left:6px;}
+@media(max-width:600px){.stats-row{grid-template-columns:1fr 1fr;}.fg-row{grid-template-columns:1fr;}.chk-grid,.modulos-grid{grid-template-columns:1fr 1fr;}.proyecto-actions{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>ORBUX</h1>
+    <p>Panel de administración</p>
+    <div class="fg"><label>Correo</label><input type="email" id="loginEmail" placeholder="admin@orbux.site"></div>
+    <div class="fg"><label>Contraseña</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+    <button class="btn btn-primary btn-block" onclick="login()">Ingresar</button>
+    <p class="error-msg" id="loginError">Credenciales incorrectas</p>
+  </div>
+</div>
+
+<div id="adminPanel">
+  <nav class="admin-nav">
+    <div class="admin-nav-logo">ORBUX <span style="font-family:'Lato',sans-serif;font-size:12px;color:var(--gris);letter-spacing:1px;font-weight:300;">admin</span></div>
+    <button class="btn btn-outline btn-sm" onclick="logout()">Cerrar sesión</button>
+  </nav>
+  <div class="admin-tabs">
+    <button class="admin-tab active" onclick="showTab('dashboard',this)">Dashboard</button>
+    <button class="admin-tab" onclick="showTab('proyectos',this)">Proyectos</button>
+    <button class="admin-tab" onclick="showTab('mensajes',this)">Mensajes <span id="badgeMensajes"></span></button>
+  </div>
+  <div class="admin-content">
+
+    <div class="tab-panel active" id="tab-dashboard">
+      <div class="stats-row">
+        <div class="stat-card"><div class="num" id="statP">-</div><div class="lbl">Proyectos</div></div>
+        <div class="stat-card"><div class="num" id="statF">-</div><div class="lbl">Fotos</div></div>
+        <div class="stat-card"><div class="num" id="statM">-</div><div class="lbl">Mensajes</div></div>
+        <div class="stat-card"><div class="num" id="statN">-</div><div class="lbl">Sin leer</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--gris);">
+        API: <a href="https://orbux-backend.onrender.com" target="_blank" style="color:var(--azul);">orbux-backend.onrender.com</a> &nbsp;·&nbsp;
+        Sitio: <a href="https://orbux.site" target="_blank" style="color:var(--azul);">orbux.site</a>
+      </p>
+    </div>
+
+    <div class="tab-panel" id="tab-proyectos">
+      <div class="section-hdr">
+        <h2>Proyectos</h2>
+        <button class="btn btn-primary btn-sm" onclick="abrirModal()">+ Nuevo proyecto</button>
+      </div>
+      <div id="proyectosList"><div class="loading">Cargando...</div></div>
+    </div>
+
+    <div class="tab-panel" id="tab-mensajes">
+      <div class="section-hdr"><h2>Mensajes</h2></div>
+      <div id="mensajesList"><div class="loading">Cargando...</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalProyecto">
+  <div class="modal">
+    <h3 id="modalTitle">Nuevo proyecto</h3>
+    <input type="hidden" id="pId">
+
+    <div class="modal-section">
+      <div class="msec-title">Información básica</div>
+      <div class="fg-row">
+        <div class="fg"><label>Nombre del lugar *</label><input type="text" id="pNombre" placeholder="Finca Villa Verde"></div>
+        <div class="fg"><label>Tipo de lugar</label>
+          <select id="pTipo" onchange="adaptarFormulario(this.value)">
+            <optgroup label="— Turismo —">
+              <option value="finca">Finca</option>
+              <option value="glamping">Glamping</option>
+              <option value="hotel">Hotel / Resort</option>
+              <option value="hosteria">Hostería</option>
+              <option value="turistico">Sitio turístico</option>
+            </optgroup>
+            <optgroup label="— Inmobiliaria —">
+              <option value="casa">Casa</option>
+              <option value="apartamento">Apartamento</option>
+              <option value="lote">Lote</option>
+              <option value="oficina">Oficina</option>
+              <option value="bodega">Bodega</option>
+              <option value="local">Local comercial</option>
+            </optgroup>
+            <optgroup label="— Vehículos —">
+              <option value="carro">Carro</option>
+              <option value="automovil">Automóvil</option>
+              <option value="camioneta">Camioneta</option>
+              <option value="moto">Moto</option>
+              <option value="tractomula">Tractomula</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>Ciudad / Municipio *</label><input type="text" id="pUbicacion" placeholder="Yopal, Casanare"></div>
+        <div class="fg">
+          <label>WhatsApp del establecimiento *</label>
+          <input type="text" id="pWhatsapp" placeholder="573001234567">
+          <p class="hint">Sin espacios ni +. Ej: 573001234567</p>
+        </div>
+      </div>
+      <div class="fg"><label>Tagline / Frase del hero</label><input type="text" id="pTagline" placeholder="Escápate a la tranquilidad del llano"><p class="hint">Frase emocional que aparece en la portada</p></div>
+      <div class="fg"><label>Descripción del lugar</label><textarea id="pDescripcion" rows="3" placeholder="Describe la experiencia..."></textarea></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="msec-title">Portada (Hero)</div>
+      <div class="fg-row">
+        <div class="fg"><label>Tipo de hero</label>
+          <select id="pHeroTipo" onchange="toggleHeroVideo()">
+            <option value="imagen">Imagen aérea</option>
+            <option value="video">Video loop</option>
+            <option value="experiencial">Experiencial (landscape)</option>
+          </select>
+        </div>
+        <div class="fg" style="grid-column:span 2;">
+          <label>Tema visual del micrositio</label>
+          <div class="temas-grid" id="temasGrid">
+            <div class="tema-opt sel" data-val="dorado" onclick="selColor(this)"><span style="background:#0d0f0a;"></span><span style="background:#c9a84c;"></span><small>Dorado luxury</small></div>
+            <div class="tema-opt" data-val="azul" onclick="selColor(this)"><span style="background:#080c14;"></span><span style="background:#2e7cbf;"></span><small>Azul corporativo</small></div>
+            <div class="tema-opt" data-val="verde" onclick="selColor(this)"><span style="background:#080f08;"></span><span style="background:#4a8c42;"></span><small>Verde naturaleza</small></div>
+            <div class="tema-opt" data-val="coral" onclick="selColor(this)"><span style="background:#100808;"></span><span style="background:#c0392b;"></span><small>Coral vibrante</small></div>
+            <div class="tema-opt" data-val="gris" onclick="selColor(this)"><span style="background:#0a0a0c;"></span><span style="background:#8a9ab0;"></span><small>Gris platino</small></div>
+            <div class="tema-opt" data-val="bordo" onclick="selColor(this)"><span style="background:#0f0608;"></span><span style="background:#8b1a3a;"></span><small>Bordo elegante</small></div>
+            <div class="tema-opt" data-val="cobre" onclick="selColor(this)"><span style="background:#0f0c08;"></span><span style="background:#b87333;"></span><small>Cobre premium</small></div>
+            <div class="tema-opt" data-val="turquesa" onclick="selColor(this)"><span style="background:#080f0f;"></span><span style="background:#0e9090;"></span><small>Turquesa marino</small></div>
+            <div class="tema-opt" data-val="champagne" onclick="selColor(this)"><span style="background:#0f0f0e;"></span><span style="background:#d4c5a9;"></span><small>Champagne suave</small></div>
+            <div class="tema-opt" data-val="lavanda" onclick="selColor(this)"><span style="background:#0d0b10;"></span><span style="background:#8b7ab5;"></span><small>Lavanda sofisticado</small></div>
+            <div class="tema-opt" data-val="titanio" onclick="selColor(this)"><span style="background:#0a0a0c;"></span><span style="background:#c8c8cc;"></span><small>Titanio plateado</small></div>
+            <div class="tema-opt" data-val="esmeralda" onclick="selColor(this)"><span style="background:#080f0b;"></span><span style="background:#1a7a4a;"></span><small>Esmeralda profundo</small></div>
+          </div>
+          <input type="hidden" id="pColorAcento" value="dorado">
+        </div>
+      </div>
+      <div class="fg"><label>URL foto de portada</label><input type="text" id="pHeroFoto" placeholder="https://res.cloudinary.com/..."><p class="hint">Sube la foto a Cloudinary y pega la URL aquí</p></div>
+      <div class="fg" id="heroVideoField" style="display:none;"><label>URL video de portada (loop)</label><input type="text" id="pHeroVideo" placeholder="https://res.cloudinary.com/.../video.mp4"><p class="hint">Video corto 10-30seg para el fondo del hero</p></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="msec-title">Módulos activos</div>
+      <p class="hint" style="margin-bottom:8px;">Activa solo las secciones que aplican para este lugar</p>
+      <div class="modulos-grid" id="modulosGrid">
+        <label class="mod-item on"><input type="checkbox" value="galeria" checked> Galería de fotos</label>
+        <label class="mod-item on"><input type="checkbox" value="amenidades" checked> Amenidades</label>
+        <label class="mod-item on"><input type="checkbox" value="alojamiento" checked> Tipos de alojamiento</label>
+        <label class="mod-item on"><input type="checkbox" value="video360" checked> Recorrido 360°</label>
+        <label class="mod-item on"><input type="checkbox" value="mapa" checked> Mapa / Ubicación</label>
+        <label class="mod-item on"><input type="checkbox" value="contacto" checked> Contacto / CTA</label>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="msec-title">Multimedia adicional</div>
+      <div class="fg"><label>Link video 360° (YouTube)</label><input type="text" id="pVideo360" placeholder="https://youtu.be/..."></div>
+      <div class="fg">
+        <label>Dirección o coordenadas GPS para el mapa</label>
+        <input type="text" id="pUbicacionMapa" placeholder="Vereda El Palmar, Yopal, Casanare">
+        <p class="hint">En Google Maps: busca el lugar → clic derecho → "¿Qué hay aquí?" → copia las coordenadas</p>
+      </div>
+    </div>
+
+    <div class="modal-section" id="secAmenidades">
+      <div class="msec-title" id="amenidadesTitle">Amenidades (marca solo las que tiene)</div>
+      <div class="chk-grid" id="amenidadesCheck">
+        <!-- Se llena dinámicamente según tipo -->
+      </div>
+    </div>
+
+    <div class="modal-section" id="secAlojamiento">
+      <div class="msec-title" id="alojamientoTitle">Tipos de alojamiento</div>
+      <div class="aloj-list" id="alojList"></div>
+      <button class="btn btn-outline btn-sm" onclick="agregarAloj()" style="margin-top:8px;">+ Agregar</button>
+      <p class="hint" id="alojHint" style="margin-top:6px;">Nombre · Capacidad. Ej: Cabaña privada / 2-4 personas</p>
+    </div>
+
+    <div class="modal-section">
+      <div class="msec-title">Tipos de alojamiento</div>
+      <div class="aloj-list" id="alojList"></div>
+      <button class="btn btn-outline btn-sm" onclick="agregarAloj()" style="margin-top:8px;">+ Agregar</button>
+      <p class="hint" style="margin-top:6px;">Nombre · Capacidad. Ej: Cabaña privada / 2-4 personas</p>
+    </div>
+
+    <div class="modal-section">
+      <div class="msec-title">Datos destacados (stats)</div>
+      <p class="hint" style="margin-bottom:8px;">Aparecen en la sección de presentación. Ej: 5 cabañas / 3 hectáreas / 20 personas</p>
+      <div class="aloj-list" id="statsList"></div>
+      <button class="btn btn-outline btn-sm" onclick="agregarStat()" style="margin-top:8px;">+ Agregar dato</button>
+    </div>
+
+    <div class="modal-btns" id="modalBtns1">
+      <button class="btn btn-outline btn-sm" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn btn-primary btn-sm" onclick="guardarProyecto()">Guardar y subir fotos →</button>
+    </div>
+
+    <!-- PASO 2: FOTOS -->
+    <div id="modalPaso2" style="display:none;">
+      <div style="border-top:1px solid rgba(46,124,191,0.2);margin:1.5rem 0;padding-top:1.5rem;">
+        <div class="msec-title" style="color:var(--verde);">✓ Proyecto guardado · Ahora sube las fotos</div>
+        <p class="hint" style="margin-bottom:1.5rem;">Selecciona la categoría y luego elige las fotos desde tu PC o celular. Puedes subir varias a la vez.</p>
+        <div id="fotosUploadZones"></div>
+        <div class="modal-btns">
+          <button class="btn btn-primary btn-sm" onclick="cerrarModal();cargarProyectos();">Listo, cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="fileInput" multiple accept="image/*" onchange="subirFotos(this)">
+
+<script>
+const API='https://orbux-backend.onrender.com/api';
+let token=localStorage.getItem('orbux_token');
+let uploadId=null;
+
+if(token)mostrarAdmin();
+
+async function login(){
+  const email=document.getElementById('loginEmail').value;
+  const password=document.getElementById('loginPassword').value;
+  try{
+    const res=await fetch(`${API}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+    const data=await res.json();
+    if(data.token){token=data.token;localStorage.setItem('orbux_token',token);mostrarAdmin();}
+    else{document.getElementById('loginError').style.display='block';}
+  }catch{document.getElementById('loginError').style.display='block';}
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&document.getElementById('loginScreen').style.display!=='none')login();
+});
+
+function logout(){
+  localStorage.removeItem('orbux_token');token=null;
+  document.getElementById('adminPanel').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+}
+
+function mostrarAdmin(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('adminPanel').style.display='block';
+  cargarDashboard();cargarProyectos();cargarMensajes();
+}
+
+function showTab(tab,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(`tab-${tab}`).classList.add('active');
+  btn.classList.add('active');
+}
+
+async function cargarDashboard(){
+  try{
+    const [pRes,mRes]=await Promise.all([
+      fetch(`${API}/proyectos`),
+      fetch(`${API}/contacto`,{headers:{Authorization:`Bearer ${token}`}})
+    ]);
+    const proyectos=await pRes.json();
+    const mensajes=await mRes.json();
+    const totalFotos=proyectos.reduce((a,p)=>a+(p.fotos?p.fotos.length:0),0);
+    const sinLeer=mensajes.filter(m=>!m.leido).length;
+    document.getElementById('statP').textContent=proyectos.length;
+    document.getElementById('statF').textContent=totalFotos;
+    document.getElementById('statM').textContent=mensajes.length;
+    document.getElementById('statN').textContent=sinLeer;
+    if(sinLeer>0)document.getElementById('badgeMensajes').innerHTML=`<span class="badge">${sinLeer}</span>`;
+  }catch{}
+}
+
+async function cargarProyectos(){
+  const list=document.getElementById('proyectosList');
+  try{
+    const res=await fetch(`${API}/proyectos`);
+    const proyectos=await res.json();
+    if(!proyectos.length){list.innerHTML='<div class="empty">No hay proyectos. Crea el primero.</div>';return;}
+    list.innerHTML=proyectos.map(p=>`
+      <div class="proyecto-item">
+        <div class="proyecto-item-hdr">
+          <div>
+            <h3>${p.nombre}</h3>
+            <p class="meta">${p.tipo_lugar||'finca'} · ${p.ubicacion||''} · Color: ${p.color_acento||'dorado'}</p>
+          </div>
+          <div class="proyecto-actions">
+            <a href="/proyecto.html?id=${p.id}" target="_blank" class="btn btn-outline btn-sm">Ver micrositio</a>
+            <button class="btn btn-outline btn-sm" onclick='editarProyecto(${JSON.stringify(p).replace(/'/g,"&#39;").replace(/"/g,'&quot;')})'>Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="eliminarProyecto(${p.id})">Eliminar</button>
+          </div>
+        </div>
+        <div class="fotos-row" id="fotos-${p.id}">
+          ${(p.fotos||[]).map(f=>`
+            <div class="foto-wrap" id="fw-${f.id}">
+              <img class="foto-thumb" src="${f.url}" alt="">
+              <button class="foto-del" onclick="eliminarFoto(${f.id},${p.id})">✕</button>
+              <select class="foto-cat" onchange="cambiarCategoria(${f.id},this.value,${p.id})" title="Categoría">
+                <option value="general" ${(f.categoria||'general')==='general'?'selected':''}>General</option>
+                <option value="aerea" ${f.categoria==='aerea'?'selected':''}>Aérea</option>
+                <option value="espacios" ${f.categoria==='espacios'?'selected':''}>Espacios</option>
+                <option value="piscina" ${f.categoria==='piscina'?'selected':''}>Piscina</option>
+                <option value="naturaleza" ${f.categoria==='naturaleza'?'selected':''}>Naturaleza</option>
+                <option value="zonas_verdes" ${f.categoria==='zonas_verdes'?'selected':''}>Zonas verdes</option>
+                <option value="bbq" ${f.categoria==='bbq'?'selected':''}>BBQ</option>
+                <option value="senderos" ${f.categoria==='senderos'?'selected':''}>Senderos</option>
+                <option value="rio" ${f.categoria==='rio'?'selected':''}>Río</option>
+                <option value="jacuzzi" ${f.categoria==='jacuzzi'?'selected':''}>Jacuzzi</option>
+                <option value="eventos" ${f.categoria==='eventos'?'selected':''}>Eventos</option>
+                <option value="alojamiento" ${f.categoria==='alojamiento'?'selected':''}>Alojamiento</option>
+                <option value="actividades" ${f.categoria==='actividades'?'selected':''}>Actividades</option>
+              </select>
+            </div>
+          `).join('')}
+          <div class="upload-box" onclick="abrirUpload(${p.id})" title="Subir fotos">+</div>
+        </div>
+        <div class="link-micrositio">
+          Link del cliente: <a href="/proyecto.html?id=${p.id}" target="_blank">orbux.site/proyecto.html?id=${p.id}</a>
+        </div>
+      </div>
+    `).join('');
+  }catch{list.innerHTML='<div class="empty">Error cargando proyectos</div>';}
+}
+
+async function cargarMensajes(){
+  const list=document.getElementById('mensajesList');
+  try{
+    const res=await fetch(`${API}/contacto`,{headers:{Authorization:`Bearer ${token}`}});
+    const mensajes=await res.json();
+    if(!mensajes.length){list.innerHTML='<div class="empty">No hay mensajes aún.</div>';return;}
+    list.innerHTML=mensajes.map(m=>`
+      <div class="msg-item ${m.leido?'leido':''}">
+        <div class="msg-hdr"><div class="msg-nombre">${m.nombre}</div><div class="msg-fecha">${new Date(m.created_at).toLocaleDateString('es-CO')}</div></div>
+        <div class="msg-tags">
+          ${m.tipo_propiedad?`<span class="tag">${m.tipo_propiedad}</span>`:''}
+          ${m.servicio?`<span class="tag">${m.servicio}</span>`:''}
+        </div>
+        <div class="msg-texto">${m.mensaje||'Sin mensaje'}</div>
+        <div class="msg-contacto">${m.contacto}</div>
+        ${!m.leido?`<button class="btn btn-outline btn-sm" onclick="marcarLeido(${m.id})" style="margin-top:1rem;">Marcar como leído</button>`:''}
+      </div>
+    `).join('');
+  }catch{list.innerHTML='<div class="empty">Error cargando mensajes</div>';}
+}
+
+function toggleHeroVideo(){
+  const tipo=document.getElementById('pHeroTipo').value;
+  document.getElementById('heroVideoField').style.display=tipo==='video'?'block':'none';
+}
+
+function selColor(el){
+  document.querySelectorAll('.tema-opt').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('pColorAcento').value=el.dataset.val;
+}
+
+function abrirModal(){
+  document.getElementById('modalTitle').textContent='Nuevo proyecto';
+  document.getElementById('pId').value='';
+  ['pNombre','pUbicacion','pWhatsapp','pTagline','pDescripcion','pHeroFoto','pHeroVideo','pVideo360','pUbicacionMapa'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('pTipo').value='finca';
+  document.getElementById('pHeroTipo').value='imagen';
+  document.getElementById('heroVideoField').style.display='none';
+  document.getElementById('pColorAcento').value='dorado';
+  document.querySelectorAll('.tema-opt').forEach((c,i)=>c.classList.toggle('sel',i===0));
+  document.querySelectorAll('#modulosGrid input').forEach(c=>{c.checked=true;c.closest('.mod-item').classList.add('on');});
+  document.getElementById('alojList').innerHTML='';
+  document.getElementById('statsList').innerHTML='';
+  adaptarFormulario('finca');
+  document.getElementById('modalProyecto').classList.add('open');
+}
+
+function editarProyecto(p){
+  document.getElementById('modalTitle').textContent='Editar proyecto';
+  document.getElementById('pId').value=p.id;
+  document.getElementById('pNombre').value=p.nombre||'';
+  document.getElementById('pTipo').value=p.tipo_lugar||'finca';
+  document.getElementById('pUbicacion').value=p.ubicacion||'';
+  document.getElementById('pWhatsapp').value=p.whatsapp||'';
+  document.getElementById('pTagline').value=p.tagline||'';
+  document.getElementById('pDescripcion').value=p.descripcion||'';
+  document.getElementById('pHeroFoto').value=p.hero_foto||'';
+  document.getElementById('pHeroVideo').value=p.hero_video||'';
+  document.getElementById('pVideo360').value=p.video360||'';
+  document.getElementById('pUbicacionMapa').value=p.ubicacion_mapa||'';
+  document.getElementById('pHeroTipo').value=p.hero_tipo||'imagen';
+  toggleHeroVideo();
+  const colorVal=p.color_acento||'dorado';
+  document.getElementById('pColorAcento').value=colorVal;
+  document.querySelectorAll('.tema-opt').forEach(c=>c.classList.toggle('sel',c.dataset.val===colorVal));
+  adaptarFormulario(p.tipo_lugar||'finca');
+  const amenidades=parseJSON(p.amenidades,[]);
+  document.querySelectorAll('#amenidadesCheck input').forEach(c=>{c.checked=amenidades.includes(c.value);c.closest('.chk-item')?.classList.toggle('on',c.checked);});
+  const modulos=parseJSON(p.modulos,['galeria','amenidades','alojamiento','video360','mapa','contacto']);
+  document.querySelectorAll('#modulosGrid input').forEach(c=>{c.checked=modulos.includes(c.value);c.closest('.mod-item').classList.toggle('on',c.checked);});
+  const alojamientos=parseJSON(p.alojamientos,[]);
+  document.getElementById('alojList').innerHTML='';
+  alojamientos.forEach(a=>agregarAloj(a.nombre,a.capacidad));
+  const stats=parseJSON(p.stats,[]);
+  document.getElementById('statsList').innerHTML='';
+  stats.forEach(s=>agregarStat(s.num,s.lbl));
+  document.getElementById('modalProyecto').classList.add('open');
+}
+
+function parseJSON(val,def){
+  if(Array.isArray(val))return val;
+  if(typeof val==='string'){try{return JSON.parse(val);}catch{return def;}}
+  return def;
+}
+
+function cerrarModal(){
+  document.getElementById('modalProyecto').classList.remove('open');
+  document.getElementById('modalBtns1').style.display='flex';
+  document.getElementById('modalPaso2').style.display='none';
+  cargarProyectos();
+}
+
+function agregarAloj(nombre='',capacidad=''){
+  const div=document.createElement('div');
+  div.className='aloj-item';
+  div.innerHTML=`<input type="text" placeholder="Ej: Cabaña privada" value="${nombre}"><input type="text" placeholder="Ej: 2-4 personas" value="${capacidad}"><button class="aloj-del" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('alojList').appendChild(div);
+}
+
+document.querySelectorAll('#modulosGrid input').forEach(c=>{
+  c.addEventListener('change',()=>c.closest('.mod-item').classList.toggle('on',c.checked));
+});
+
+const TIPOS_TURISMO=['finca','glamping','hotel','hosteria','turistico'];
+const TIPOS_INMO=['casa','apartamento','lote','oficina','bodega','local'];
+const TIPOS_VEH=['carro','automovil','camioneta','moto','tractomula'];
+
+const AMENIDADES_POR_TIPO={
+  turismo:[
+    {v:'piscina',l:'Piscina'},{v:'zonas_verdes',l:'Zonas verdes'},{v:'bbq',l:'BBQ / Fogón'},
+    {v:'wifi',l:'WiFi'},{v:'parking',l:'Parqueadero'},{v:'restaurante',l:'Restaurante'},
+    {v:'eventos',l:'Salón eventos'},{v:'senderos',l:'Senderos'},{v:'rio',l:'Río / Quebrada'},
+    {v:'jacuzzi',l:'Jacuzzi'},{v:'deportes',l:'Deportes'},{v:'cabalgata',l:'Cabalgata'}
+  ],
+  inmobiliaria:[
+    {v:'parqueadero',l:'Parqueadero'},{v:'ascensor',l:'Ascensor'},{v:'vigilancia',l:'Vigilancia 24h'},
+    {v:'piscina',l:'Piscina'},{v:'gimnasio',l:'Gimnasio'},{v:'bbq',l:'Zona BBQ'},
+    {v:'zonas_verdes',l:'Zonas verdes'},{v:'salon_comunal',l:'Salón comunal'},
+    {v:'terraza',l:'Terraza'},{v:'deposito',l:'Depósito'},{v:'cuarto_util',l:'Cuarto útil'},
+    {v:'amoblado',l:'Amoblado'}
+  ],
+  vehiculos:[
+    {v:'aire',l:'Aire acondicionado'},{v:'abs',l:'Frenos ABS'},{v:'airbag',l:'Airbags'},
+    {v:'camara',l:'Cámara reversa'},{v:'bluetooth',l:'Bluetooth'},{v:'gps',l:'GPS'},
+    {v:'electrico',l:'Eléctrico/Híbrido'},{v:'sunroof',l:'Sunroof'},{v:'cuero',l:'Tapicería cuero'},
+    {v:'4x4',l:'4x4'},{v:'turbo',l:'Motor turbo'},{v:'automatico',l:'Transmisión automática'}
+  ]
+};
+
+const MODULOS_POR_TIPO={
+  turismo:['galeria','amenidades','alojamiento','video360','mapa','contacto'],
+  inmobiliaria:['galeria','amenidades','mapa','contacto'],
+  vehiculos:['galeria','amenidades','contacto']
+};
+
+const ALOJ_HINT={
+  turismo:'Nombre · Capacidad. Ej: Cabaña privada / 2-4 personas',
+  inmobiliaria:'Tipo · Detalle. Ej: Habitación principal / Con baño propio',
+  vehiculos:'Versión · Detalle. Ej: Full equipo / Color negro'
+};
+
+const ALOJ_TITLE={
+  turismo:'Tipos de alojamiento',
+  inmobiliaria:'Espacios del inmueble',
+  vehiculos:'Versiones disponibles'
+};
+
+const STATS_PLACEHOLDER={
+  turismo:[{n:'5',l:'Cabañas'},{n:'3ha',l:'Hectáreas'},{n:'20',l:'Personas máx'}],
+  inmobiliaria:[{n:'120',l:'m²'},{n:'3',l:'Habitaciones'},{n:'2',l:'Baños'},{n:'5',l:'Estrato'}],
+  vehiculos:[{n:'2022',l:'Año'},{n:'45.000',l:'Km'},{n:'2.0L',l:'Motor'},{n:'Consult.',l:'Precio'}]
+};
+
+function getTipoGrupo(tipo){
+  if(TIPOS_INMO.includes(tipo))return 'inmobiliaria';
+  if(TIPOS_VEH.includes(tipo))return 'vehiculos';
+  return 'turismo';
+}
+
+function adaptarFormulario(tipo){
+  const grupo=getTipoGrupo(tipo);
+
+  // Amenidades
+  const amenidades=AMENIDADES_POR_TIPO[grupo];
+  const chkGrid=document.getElementById('amenidadesCheck');
+  chkGrid.innerHTML=amenidades.map(a=>'<label class="chk-item"><input type="checkbox" value="'+a.v+'"> '+a.l+'</label>').join('');
+  chkGrid.querySelectorAll('input').forEach(c=>{
+    c.addEventListener('change',()=>c.closest('.chk-item').classList.toggle('on',c.checked));
+  });
+
+  // Título alojamiento
+  document.getElementById('alojamientoTitle').textContent=ALOJ_TITLE[grupo];
+  document.getElementById('alojHint').textContent=ALOJ_HINT[grupo];
+
+  // Ocultar alojamiento para vehículos (usan versiones)
+  document.getElementById('secAlojamiento').style.display=grupo==='vehiculos'?'none':'block';
+
+  // Módulos por defecto
+  const modulos=MODULOS_POR_TIPO[grupo];
+  document.querySelectorAll('#modulosGrid input').forEach(c=>{
+    c.checked=modulos.includes(c.value);
+    c.closest('.mod-item').classList.toggle('on',c.checked);
+  });
+
+  // Placeholder tagline según tipo
+  const taglinePH={turismo:'Escápate a la tranquilidad del llano',inmobiliaria:'El hogar que siempre soñaste',vehiculos:'Potencia y confort en un solo vehículo'};
+  document.getElementById('pTagline').placeholder=taglinePH[grupo]||'';
+}
+
+function agregarStat(num='',lbl=''){
+  const div=document.createElement('div');
+  div.className='aloj-item';
+  div.innerHTML='<input type="text" placeholder="Ej: 5 o 3ha" value="'+num+'">'
+    +'<input type="text" placeholder="Ej: Cabañas o Hectáreas" value="'+lbl+'">'
+    +'<button class="aloj-del" onclick="this.parentElement.remove()">✕</button>';
+  document.getElementById('statsList').appendChild(div);
+}
+
+async function guardarProyecto(){
+  const id=document.getElementById('pId').value;
+  const amenidades=Array.from(document.querySelectorAll('#amenidadesCheck input:checked')).map(c=>c.value);
+  const modulos=Array.from(document.querySelectorAll('#modulosGrid input:checked')).map(c=>c.value);
+  const alojamientos=Array.from(document.querySelectorAll('#alojList .aloj-item')).map(el=>{
+    const inp=el.querySelectorAll('input');
+    return{nombre:inp[0].value,capacidad:inp[1].value};
+  }).filter(a=>a.nombre.trim());
+  const stats=Array.from(document.querySelectorAll('#statsList .aloj-item')).map(el=>{
+    const inp=el.querySelectorAll('input');
+    return{num:inp[0].value,lbl:inp[1].value};
+  }).filter(s=>s.num.trim()&&s.lbl.trim());
+
+  const body={
+    nombre:document.getElementById('pNombre').value,
+    tipo_lugar:document.getElementById('pTipo').value,
+    ubicacion:document.getElementById('pUbicacion').value,
+    whatsapp:document.getElementById('pWhatsapp').value,
+    tagline:document.getElementById('pTagline').value,
+    descripcion:document.getElementById('pDescripcion').value,
+    hero_foto:document.getElementById('pHeroFoto').value,
+    hero_video:document.getElementById('pHeroVideo').value,
+    hero_tipo:document.getElementById('pHeroTipo').value,
+    color_acento:document.getElementById('pColorAcento').value,
+    video360:document.getElementById('pVideo360').value,
+    ubicacion_mapa:document.getElementById('pUbicacionMapa').value,
+    amenidades,modulos,alojamientos,stats,activo:true
+  };
+
+  const url=id?`${API}/proyectos/${id}`:`${API}/proyectos`;
+  const method=id?'PUT':'POST';
+  const res=await fetch(url,{method,headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`},body:JSON.stringify(body)});
+  const proyecto=await res.json();
+  uploadId=proyecto.id;
+  document.getElementById('pId').value=proyecto.id;
+  mostrarPaso2(amenidades, proyecto);
+  cargarDashboard();
+}
+
+const CATS_LABELS={
+  general:'Fotos generales',aerea:'Vista aérea (dron)',espacios:'Espacios / Habitaciones',
+  piscina:'Piscina',zonas_verdes:'Zonas verdes',bbq:'BBQ / Fogón',wifi:'WiFi',
+  senderos:'Senderos',rio:'Río / Quebrada',jacuzzi:'Jacuzzi',deportes:'Deportes',
+  cabalgata:'Cabalgata',eventos:'Salón de eventos',alojamiento:'Alojamiento',actividades:'Actividades'
+};
+
+function mostrarPaso2(amenidades, proyecto){
+  document.getElementById('modalBtns1').style.display='none';
+  document.getElementById('modalPaso2').style.display='block';
+  const fotos=proyecto.fotos||[];
+  const cats=['general','aerea',...amenidades];
+  const unique=[...new Set(cats)];
+  const zones=document.getElementById('fotosUploadZones');
+  zones.innerHTML=unique.map(cat=>{
+    const fotosCat=fotos.filter(f=>f.categoria===cat);
+    const thumbs=fotosCat.map(f=>'<div class="foto-wrap">'
+      +'<img class="foto-thumb" src="'+f.url+'" alt="">'
+      +'<button class="foto-del" onclick="eliminarFotoZone('+f.id+',\''+cat+'\','+proyecto.id+')">✕</button>'
+      +'</div>').join('');
+    return '<div class="upload-zone" id="zone-'+cat+'">'
+      +'<div class="upload-zone-header">'
+      +'<span class="upload-zone-title">'+(CATS_LABELS[cat]||cat)+'</span>'
+      +'<button class="upload-zone-btn" onclick="abrirUploadCat('+proyecto.id+',\''+cat+'\')">+ Subir fotos</button>'
+      +'</div>'
+      +'<div class="upload-zone-fotos" id="zone-fotos-'+cat+'">'+thumbs+'</div>'
+      +'<div class="upload-progress" id="zone-prog-'+cat+'">Subiendo...</div>'
+      +'</div>';
+  }).join('');
+}
+
+function abrirUploadCat(pid,cat){
+  uploadId=pid;
+  uploadCat=cat;
+  document.getElementById('fileInput').click();
+}
+
+async function eliminarFotoZone(id,cat,pid){
+  await fetch(`${API}/fotos/${id}`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`}});
+  const wrap=document.querySelector('#zone-fotos-'+cat+' .foto-wrap:has(button[onclick*="'+id+'"])');
+  if(wrap)wrap.remove();
+  cargarDashboard();
+}
+
+async function eliminarProyecto(id){
+  if(!confirm('¿Eliminar este proyecto y todas sus fotos?'))return;
+  await fetch(`${API}/proyectos/${id}`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`}});
+  cargarProyectos();cargarDashboard();
+}
+
+let uploadCat='general';
+
+function abrirUpload(id){uploadId=id;uploadCat='general';document.getElementById('fileInput').click();}
+
+async function subirFotos(input){
+  const files=Array.from(input.files);
+  if(!files.length)return;
+  const prog=document.getElementById('zone-prog-'+uploadCat);
+  if(prog){prog.style.display='block';prog.textContent='Subiendo '+files.length+' foto(s)...';}
+  for(const file of files){
+    const form=new FormData();
+    form.append('foto',file);
+    form.append('categoria',uploadCat);
+    const res=await fetch(`${API}/fotos/subir/${uploadId}`,{method:'POST',headers:{Authorization:`Bearer ${token}`},body:form});
+    const foto=await res.json();
+    const zone=document.getElementById('zone-fotos-'+uploadCat);
+    if(zone&&foto.url){
+      const div=document.createElement('div');
+      div.className='foto-wrap';
+      div.innerHTML='<img class="foto-thumb" src="'+foto.url+'" alt="">'
+        +'<button class="foto-del" onclick="eliminarFotoZone('+foto.id+',\''+uploadCat+'\','+uploadId+')">✕</button>';
+      zone.appendChild(div);
+    }
+  }
+  if(prog){prog.textContent='✓ Listo';setTimeout(()=>{prog.style.display='none';},2000);}
+  input.value='';
+  cargarDashboard();
+}
+
+async function eliminarFoto(id,proyectoId){
+  if(!confirm('¿Eliminar esta foto?'))return;
+  await fetch(`${API}/fotos/${id}`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`}});
+  cargarProyectos();cargarDashboard();
+}
+
+async function cambiarCategoria(fotoId,categoria,proyectoId){
+  await fetch(`${API}/fotos/${fotoId}/categoria`,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`},
+    body:JSON.stringify({categoria})
+  });
+}
+
+async function marcarLeido(id){
+  await fetch(`${API}/contacto/${id}/leido`,{method:'PUT',headers:{Authorization:`Bearer ${token}`}});
+  cargarMensajes();cargarDashboard();
+}
+</script>
+</body>
+</html>

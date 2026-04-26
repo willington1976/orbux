@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cargando... · ORBUX</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== VARIABLES BASE ===== */
+:root{
+  --ac:#c9a84c; --ac2:#b8952e;
+  --negro:#0d0f0a; --negro2:#141710; --negro3:#1c2018;
+  --gris:#8a9a80; --blanco:#f5f2eb;
+}
+/* Temas por color de acento */
+body.tema-azul{--ac:#2e7cbf;--ac2:#1a4f7a;--negro:#080c14;--negro2:#0f1419;--negro3:#141c24;--gris:#8a9ab0;--blanco:#f0ede8;}
+body.tema-verde{--ac:#4a8c42;--ac2:#2d5a27;--negro:#080f08;--negro2:#0f160e;--negro3:#141d12;--gris:#8a9a80;--blanco:#f0f5ee;}
+body.tema-coral{--ac:#c0392b;--ac2:#962d22;--negro:#100808;--negro2:#180f0e;--negro3:#1e1412;--gris:#9a8a8a;--blanco:#f5eeee;}
+body.tema-gris{--ac:#8a9ab0;--ac2:#6b7a8d;--negro:#0a0a0c;--negro2:#12141a;--negro3:#181b22;--gris:#8a9ab0;--blanco:#f0ede8;}
+body.tema-bordo{--ac:#8b1a3a;--ac2:#6b1230;--negro:#0f0608;--negro2:#170a0e;--negro3:#1e0e13;--gris:#9a8a8e;--blanco:#f5eef0;}
+body.tema-cobre{--ac:#b87333;--ac2:#8f5a28;--negro:#0f0c08;--negro2:#17120e;--negro3:#1e1813;--gris:#9a9080;--blanco:#f5f0ea;}
+body.tema-turquesa{--ac:#0e9090;--ac2:#0a6868;--negro:#080f0f;--negro2:#0e1616;--negro3:#141d1d;--gris:#809a9a;--blanco:#eef5f5;}
+body.tema-champagne{--ac:#d4c5a9;--ac2:#b8a88a;--negro:#0f0f0e;--negro2:#171716;--negro3:#1d1d1c;--gris:#9a9a90;--blanco:#f5f4f0;}
+body.tema-lavanda{--ac:#8b7ab5;--ac2:#6b5a95;--negro:#0d0b10;--negro2:#140f18;--negro3:#1a141f;--gris:#908aa0;--blanco:#f0eef5;}
+body.tema-titanio{--ac:#c8c8cc;--ac2:#a0a0a8;--negro:#0a0a0c;--negro2:#111114;--negro3:#18181c;--gris:#8a8a90;--blanco:#f0f0f2;}
+body.tema-esmeralda{--ac:#1a7a4a;--ac2:#125a38;--negro:#080f0b;--negro2:#0e1610;--negro3:#141d16;--gris:#809a88;--blanco:#eef5f0;}
+
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--negro);color:rgba(245,242,235,0.92);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;font-size:16px;line-height:1.7;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:68px;background:rgba(13,15,10,0.93);border-bottom:1px solid rgba(201,168,76,0.12);backdrop-filter:blur(14px);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:17px;color:var(--blanco);letter-spacing:1px;}
+.nav-cta{background:var(--ac);color:var(--negro);padding:10px 22px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-family:'Lato',sans-serif;transition:all 0.25s;border-radius:6px;}
+.nav-cta:hover{background:var(--ac2);transform:translateY(-1px);}
+
+/* HERO */
+.hero{height:100vh;min-height:600px;position:relative;display:flex;align-items:flex-end;padding:0 2.5rem 5rem;}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;}
+.hero-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,15,10,0.95) 0%,rgba(13,15,10,0.45) 50%,rgba(13,15,10,0.1) 100%);}
+.hero-content{position:relative;z-index:2;max-width:680px;}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:4px;color:var(--ac);text-transform:uppercase;margin-bottom:1.5rem;}
+.hero-tag::before{content:'';width:28px;height:1px;background:var(--ac);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,7vw,88px);font-weight:400;line-height:1.0;margin-bottom:1.25rem;color:#fff;}
+.hero h1 em{font-style:italic;color:var(--ac);}
+.hero-desc{font-size:17px;color:rgba(255,255,255,0.82);line-height:1.8;max-width:460px;margin-bottom:2.5rem;font-weight:300;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+
+/* BOTONES — CTA más dominante */
+.btn-ac{background:var(--ac);color:var(--negro);padding:16px 32px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;font-family:'Lato',sans-serif;transition:all 0.25s;border:none;cursor:pointer;display:inline-block;border-radius:8px;}
+.btn-ac:hover{background:var(--ac2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.btn-ow{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.9);padding:16px 32px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;font-family:'Lato',sans-serif;border:1px solid rgba(255,255,255,0.2);transition:all 0.25s;cursor:pointer;display:inline-block;border-radius:8px;backdrop-filter:blur(8px);}
+.btn-ow:hover{border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);}
+
+/* SECCIONES — padding reducido */
+section{padding:4rem 2.5rem;max-width:1200px;margin:0 auto;}
+.eyebrow{font-size:11px;letter-spacing:4px;color:var(--ac);text-transform:uppercase;margin-bottom:1rem;display:block;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,40px);font-weight:400;margin-bottom:1.75rem;color:#fff;}
+.sec-title em{font-style:italic;color:var(--ac);}
+
+/* INTRO */
+.intro-bg{background:var(--negro2);padding:4rem 2.5rem;}
+.intro-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.intro-text p{font-size:16px;color:rgba(245,242,235,0.78);line-height:1.9;margin-bottom:1rem;}
+.intro-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;}
+.stat{border-left:2px solid var(--ac);padding-left:1rem;}
+.stat-num{font-family:'Playfair Display',serif;font-size:26px;color:var(--ac);}
+.stat-lbl{font-size:10px;letter-spacing:2px;color:rgba(245,242,235,0.5);text-transform:uppercase;}
+.intro-img img{width:100%;height:480px;object-fit:cover;border-radius:4px;}
+.intro-img{position:relative;}
+.intro-badge{position:absolute;bottom:-1.5rem;left:-1.5rem;background:var(--ac);color:var(--negro);padding:1.5rem;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;max-width:180px;line-height:1.6;border-radius:4px;}
+
+/* GALERÍA */
+.galeria-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid rgba(201,168,76,0.2);margin-bottom:2rem;}
+.gtab{padding:10px 18px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,242,235,0.5);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;font-family:'Lato',sans-serif;transition:all 0.2s;}
+.gtab.active{color:var(--ac);border-bottom-color:var(--ac);}
+.galeria-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;overflow:hidden;}
+.galeria-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;cursor:pointer;transition:opacity 0.25s,transform 0.25s;border-radius:2px;display:block;min-width:0;}
+.galeria-grid img:first-child{grid-column:span 2;aspect-ratio:16/9;}
+.galeria-grid img:only-child{grid-column:span 3;aspect-ratio:16/9;}
+.galeria-grid img:nth-child(3n+1):last-child{grid-column:span 3;}
+.galeria-grid img:nth-child(3n+2):last-child{grid-column:span 2;}
+.galeria-grid img:hover{opacity:0.82;transform:scale(1.01);}
+.galeria-empty-msg{color:rgba(245,242,235,0.35);font-size:13px;padding:2rem 0;}
+
+/* AMENIDADES — glassmorphism */
+.amenidades-bg{background:var(--negro2);padding:4rem 2.5rem;}
+.amenidades-inner{max-width:1200px;margin:0 auto;text-align:center;}
+.amenidades-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:2rem;}
+.amenidad{padding:1.75rem 1rem;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);backdrop-filter:blur(14px);transition:all 0.35s;border-radius:12px;cursor:default;}
+.amenidad.amenidad-clickeable{cursor:pointer;}
+.amenidad:hover{border-color:rgba(201,168,76,0.35);transform:translateY(-6px);background:rgba(255,255,255,0.05);}
+.amenidad.amenidad-clickeable:hover{border-color:var(--ac);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.amenidad h3{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);letter-spacing:1px;text-transform:uppercase;margin-bottom:0.5rem;}
+.amenidad p{font-size:12px;color:rgba(245,242,235,0.55);line-height:1.6;}
+
+/* ALOJAMIENTO */
+.aloj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.aloj-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);overflow:hidden;border-radius:12px;transition:transform 0.35s,box-shadow 0.35s;}
+.aloj-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,0.4);}
+.aloj-card-img{width:100%;height:200px;object-fit:cover;background:var(--negro3);display:flex;align-items:center;justify-content:center;color:rgba(245,242,235,0.35);font-size:12px;letter-spacing:2px;}
+.aloj-body{padding:1.5rem;}
+.aloj-body h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:0.5rem;color:#fff;}
+.aloj-body p{font-size:13px;color:rgba(245,242,235,0.6);line-height:1.7;}
+.aloj-tag{display:inline-block;margin-top:1rem;font-size:10px;letter-spacing:2px;color:var(--ac);border:1px solid rgba(201,168,76,0.3);padding:4px 12px;text-transform:uppercase;border-radius:20px;}
+
+/* VIDEO 360 — integrado y premium */
+.video360-bg{background:var(--negro3);padding:4rem 2.5rem;text-align:center;}
+.video-inner{max-width:880px;margin:0 auto;}
+.video-inner p{font-size:16px;color:rgba(245,242,235,0.7);margin-bottom:2rem;line-height:1.8;}
+.video-container{position:relative;aspect-ratio:16/9;background:var(--negro2);overflow:hidden;border-radius:20px;box-shadow:0 32px 64px rgba(0,0,0,0.5);}
+.video-container iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.video-placeholder{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80') center/cover;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.video-overlay{position:absolute;inset:0;background:rgba(13,15,10,0.45);}
+.play-btn{position:relative;z-index:2;width:84px;height:84px;border-radius:50%;background:rgba(201,168,76,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;transition:transform 0.25s,box-shadow 0.25s;}
+.play-btn:hover{transform:scale(1.12);box-shadow:0 0 40px rgba(201,168,76,0.5);}
+
+/* MAPA — más grande y premium */
+.mapa-bg{background:var(--negro2);padding:4rem 2.5rem;}
+.mapa-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:3.5rem;align-items:center;}
+.mapa-text p{font-size:15px;color:rgba(245,242,235,0.72);line-height:1.9;margin-bottom:1rem;}
+.mapa-puntos{list-style:none;margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}
+.mapa-puntos li{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(245,242,235,0.65);}
+.mapa-puntos li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ac);flex-shrink:0;}
+.mapa-embed{overflow:hidden;height:420px;border-radius:16px;box-shadow:0 24px 48px rgba(0,0,0,0.4);}
+.mapa-embed iframe{width:100%;height:100%;border:none;filter:grayscale(25%) invert(88%) hue-rotate(180deg);}
+
+/* CTA FINAL — irresistible */
+.cta-bg{background:var(--negro2);border-top:1px solid rgba(201,168,76,0.15);padding:5rem 2.5rem;text-align:center;}
+.cta-bg h2{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:400;line-height:1.1;margin-bottom:1.25rem;color:#fff;}
+.cta-bg h2 em{font-style:italic;color:var(--ac);}
+.cta-bg .cta-sub{font-size:16px;color:rgba(245,242,235,0.65);max-width:460px;margin:0 auto 0.75rem;line-height:1.9;}
+.cta-microcopy{font-size:13px;color:rgba(245,242,235,0.38);margin-bottom:2.5rem;letter-spacing:1px;}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-wa{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:17px 34px;font-size:14px;font-weight:700;letter-spacing:0.5px;text-decoration:none;font-family:'Lato',sans-serif;text-transform:uppercase;transition:all 0.25s;border-radius:8px;}
+.btn-wa:hover{background:#1ea855;transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.35);}
+
+/* SHARE */
+.share-strip{background:var(--negro3);padding:1.25rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.share-strip p{font-size:11px;letter-spacing:2px;color:rgba(245,242,235,0.4);text-transform:uppercase;}
+.share-btn{background:none;border:1px solid rgba(201,168,76,0.2);color:var(--ac);padding:7px 16px;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;transition:all 0.2s;text-decoration:none;display:inline-block;border-radius:4px;}
+.share-btn:hover{background:rgba(201,168,76,0.08);}
+
+footer{padding:2.5rem;text-align:center;border-top:1px solid rgba(255,255,255,0.06);}
+footer p{font-size:11px;color:rgba(245,242,235,0.3);letter-spacing:1px;}
+footer .footer-tagline{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:rgba(245,242,235,0.5);margin-bottom:0.75rem;}
+footer a{color:var(--ac);text-decoration:none;}
+
+.wa-float{position:fixed;bottom:2rem;right:2rem;z-index:300;width:58px;height:58px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;animation:waPulse 2.5s infinite;box-shadow:0 4px 20px rgba(37,211,102,0.4);}
+.wa-float:hover{transform:scale(1.1);}
+@keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.35);}50%{box-shadow:0 4px 36px rgba(37,211,102,0.7);}}
+
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:999;align-items:center;justify-content:center;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:92vw;max-height:92vh;object-fit:contain;border-radius:4px;}
+.lightbox-close{position:fixed;top:1.5rem;right:2rem;color:#fff;font-size:28px;cursor:pointer;background:none;border:none;opacity:0.7;}
+
+@media(max-width:768px){
+  .intro-inner{grid-template-columns:1fr;}.intro-img{display:none;}
+  .galeria-grid{grid-template-columns:1fr 1fr;}.galeria-grid img:first-child{grid-column:span 2;}
+  .amenidades-grid{grid-template-columns:1fr 1fr;}
+  .aloj-grid{grid-template-columns:1fr;}
+  .mapa-inner{grid-template-columns:1fr;gap:2rem;}
+  section{padding:3rem 1.5rem;}
+  .intro-bg,.amenidades-bg,.video360-bg,.mapa-bg,.cta-bg{padding:3rem 1.5rem;}
+}
+
+/* ÍCONOS AMENIDADES */
+.icon-piscina::before{content:'🏊';}
+.icon-zonas_verdes::before{content:'🌿';}
+.icon-bbq::before{content:'🔥';}
+.icon-wifi::before{content:'📶';}
+.icon-parking::before{content:'🅿️';}
+.icon-restaurante::before{content:'🍽️';}
+.icon-eventos::before{content:'🎉';}
+.icon-senderos::before{content:'🥾';}
+.icon-rio::before{content:'💧';}
+.icon-jacuzzi::before{content:'♨️';}
+.icon-deportes::before{content:'⚽';}
+.icon-cabalgata::before{content:'🐴';}
+.amenidad-icon-emoji{font-size:34px;margin-bottom:1rem;display:block;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" id="navLogo">Cargando...</div>
+  <a href="#contacto" class="nav-cta" id="navCta">Consultar disponibilidad</a>
+</nav>
+
+<div id="contenido"></div>
+
+<a class="wa-float" id="waFloat" href="#" target="_blank">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.625a.75.75 0 00.918.918l5.771-1.476A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.807-.536-5.393-1.471l-.385-.229-3.99 1.021 1.023-3.877-.247-.396A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&#x2715;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+const API='https://orbux-backend.onrender.com/api';
+const params=new URLSearchParams(window.location.search);
+const proyectoId=params.get('id');
+let p=null;
+let todasFotos=[];
+let videoUrl='';
+
+const AMENIDADES_INFO={
+  piscina:{label:'Piscina',desc:'Refréscate rodeado de naturaleza'},
+  zonas_verdes:{label:'Zonas verdes',desc:'Amplios jardines y senderos naturales'},
+  bbq:{label:'BBQ / Fogón',desc:'Zona de parrilla para compartir'},
+  wifi:{label:'WiFi',desc:'Conexión en zonas comunes'},
+  parking:{label:'Parqueadero',desc:'Estacionamiento propio'},
+  restaurante:{label:'Restaurante',desc:'Gastronomía local disponible'},
+  eventos:{label:'Salón de eventos',desc:'Espacios para celebraciones'},
+  senderos:{label:'Senderos',desc:'Rutas naturales para caminar'},
+  rio:{label:'Río / Quebrada',desc:'Acceso directo al agua natural'},
+  jacuzzi:{label:'Jacuzzi',desc:'Relájate con vista al paisaje'},
+  deportes:{label:'Deportes',desc:'Canchas y zonas deportivas'},
+  cabalgata:{label:'Cabalgata',desc:'Recorridos a caballo por la finca'}
+};
+
+const TEMAS={
+  dorado:'tema-dorado',azul:'tema-azul',verde:'tema-verde',coral:'tema-coral',
+  gris:'tema-gris',bordo:'tema-bordo',cobre:'tema-cobre',turquesa:'tema-turquesa',
+  champagne:'tema-champagne',lavanda:'tema-lavanda',titanio:'tema-titanio',esmeralda:'tema-esmeralda'
+};
+
+if(proyectoId){cargarProyecto();}else{renderEjemplo();}
+
+let fotosPorCategoria={};
+
+async function cargarProyecto(){
+  try{
+    const res=await fetch(`${API}/proyectos`);
+    const proyectos=await res.json();
+    p=proyectos.find(x=>x.id==proyectoId);
+    if(!p){renderEjemplo();return;}
+    aplicarTema(p.color_acento||'dorado');
+    document.title=`${p.nombre} · ORBUX`;
+    document.getElementById('navLogo').textContent=p.nombre;
+    const fotos=p.fotos||[];
+    todasFotos=fotos.map(f=>f.url);
+    fotosPorCategoria={todas:todasFotos};
+    fotos.forEach(f=>{
+      const cat=f.categoria||'general';
+      if(!fotosPorCategoria[cat])fotosPorCategoria[cat]=[];
+      fotosPorCategoria[cat].push(f.url);
+    });
+    videoUrl=p.video360||'';
+    const wa=p.whatsapp||'573133747681';
+    const waMsg=encodeURIComponent(`Hola, vi el micrositio de ${p.nombre} y me interesa más información`);
+    const waUrl=`https://wa.me/${wa}?text=${waMsg}`;
+    document.getElementById('waFloat').href=waUrl;
+    renderSecciones(p,waUrl);
+  }catch(e){renderEjemplo();}
+}
+
+function aplicarTema(color){
+  const clases=Object.values(TEMAS);
+  document.body.classList.remove(...clases);
+  if(TEMAS[color])document.body.classList.add(TEMAS[color]);
+}
+
+function parseJSON(val,def){
+  if(Array.isArray(val))return val;
+  if(typeof val==='string'){try{return JSON.parse(val);}catch{return def;}}
+  return def;
+}
+
+const TIPOS_VEH_LIST=['carro','automovil','camioneta','moto','tractomula'];
+const TIPOS_INMO_LIST=['casa','apartamento','lote','oficina','bodega','local'];
+
+function getTipoGrupo(tipo){
+  if(TIPOS_VEH_LIST.includes(tipo))return 'vehiculo';
+  if(TIPOS_INMO_LIST.includes(tipo))return 'inmobiliaria';
+  return 'turismo';
+}
+
+const COPY={
+  turismo:{
+    navCta:'Consultar disponibilidad',
+    heroBtn1:'Explorar el lugar',
+    heroBtn2:'Consultar disponibilidad',
+    heroTagDefault:'Descubre un lugar único para desconectarte y disfrutar.',
+    introEyebrow:'El lugar',
+    introDesc2:'Perfecta para familias, grupos o parejas que buscan desconectarse sin renunciar a la comodidad.',
+    statsDefault:[{num:'360°',lbl:'Recorrido virtual'},{num:'4K',lbl:'Fotografía aérea'},{num:'∞',lbl:'Naturaleza'},{num:'24/7',lbl:'Atención'}],
+    ctaEyebrow:'¿Te interesa?',
+    ctaH2:'Tu próxima<br><em>desconexión</em> comienza aquí',
+    ctaSub:'Escríbenos y te contamos disponibilidad, tarifas y todo lo que necesitas para vivir esta experiencia.',
+    ctaMicro:'Respuesta en menos de 2 horas · Sin costo de cotización',
+    ctaWa:'Consultar disponibilidad',
+    footerTag:'Un lugar donde el tiempo se detiene',
+    mapaEyebrow:'Cómo llegar',
+    mapaTitulo:'Ubicación',
+    mapaBtn:'Consultar cómo llegar',
+    mapaPuntos:['Acceso por vía pavimentada','Estacionamiento propio','Coordenadas disponibles al consultar'],
+    shareMsg:'Mira este lugar: '
+  },
+  inmobiliaria:{
+    navCta:'Agendar visita',
+    heroBtn1:'Ver la propiedad',
+    heroBtn2:'Agendar visita',
+    heroTagDefault:'La propiedad que estabas buscando, ahora disponible.',
+    introEyebrow:'La propiedad',
+    introDesc2:'Ubicación estratégica, excelentes acabados y las condiciones ideales para tu inversión o tu nuevo hogar.',
+    statsDefault:[{num:'0',lbl:'m² construidos'},{num:'0',lbl:'Habitaciones'},{num:'0',lbl:'Baños'},{num:'0',lbl:'Estrato'}],
+    ctaEyebrow:'¿Te interesa esta propiedad?',
+    ctaH2:'Agenda tu<br><em>visita</em> hoy mismo',
+    ctaSub:'Contáctanos y coordina una visita presencial o virtual. Sin compromisos, sin costos.',
+    ctaMicro:'Asesor disponible · Respuesta en menos de 1 hora',
+    ctaWa:'Agendar visita por WhatsApp',
+    footerTag:'Tu próximo hogar o inversión te espera',
+    mapaEyebrow:'Ubicación',
+    mapaTitulo:'¿Dónde está?',
+    mapaBtn:'Cómo llegar',
+    mapaPuntos:['Zona de alta valorización','Vías de acceso principales','Cerca a colegios, centros comerciales y hospitales'],
+    shareMsg:'Mira esta propiedad: '
+  },
+  vehiculo:{
+    navCta:'Solicitar cotización',
+    heroBtn1:'Ver detalles',
+    heroBtn2:'Solicitar cotización',
+    heroTagDefault:'Potencia, diseño y tecnología en un solo vehículo.',
+    introEyebrow:'El vehículo',
+    introDesc2:'Ingeniería de alto nivel, confort de clase superior y un desempeño que se siente desde el primer arranque.',
+    statsDefault:[{num:'—',lbl:'Cilindrada'},{num:'—',lbl:'Potencia'},{num:'—',lbl:'Año modelo'},{num:'—',lbl:'Km recorridos'}],
+    ctaEyebrow:'¿Te interesa este vehículo?',
+    ctaH2:'Tu próxima<br><em>máquina</em> te espera',
+    ctaSub:'Escríbenos para conocer precio, formas de pago, financiación y agendar una prueba de manejo.',
+    ctaMicro:'Respuesta inmediata · Prueba de manejo disponible',
+    ctaWa:'Consultar precio y disponibilidad',
+    footerTag:'Haz que cada ruta comience con carácter',
+    mapaEyebrow:'Dónde encontrarnos',
+    mapaTitulo:'Ubicación',
+    mapaBtn:'Cómo llegar al concesionario',
+    mapaPuntos:['Atención con cita previa','Prueba de manejo disponible','Financiación y trámites en el lugar'],
+    shareMsg:'Mira este vehículo: '
+  }
+};
+
+function renderSecciones(p,waUrl){
+  const grupo=getTipoGrupo(p.tipo_lugar||'finca');
+  const cp=COPY[grupo];
+  const modulos=parseJSON(p.modulos,['galeria','amenidades','alojamiento','video360','mapa','contacto']);
+  const amenidades=parseJSON(p.amenidades,[]);
+  const alojamientos=parseJSON(p.alojamientos,[]);
+  const partes=p.nombre.split(' ');
+  const heroTitle=partes.length>1?`${partes[0]}<br><em>${partes.slice(1).join(' ')}</em>`:p.nombre;
+  const heroBg=p.hero_foto?`background-image:url('${p.hero_foto}')`:
+    `background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=80')`;
+  const heroVideo=p.hero_tipo==='video'&&p.hero_video?
+    `<video autoplay muted loop playsinline><source src="${p.hero_video}" type="video/mp4"></video>`:'';
+
+  // Actualizar nav CTA
+  document.getElementById('navCta').textContent=cp.navCta;
+
+  const statsData=parseJSON(p.stats,[]).length>0?parseJSON(p.stats,[]):cp.statsDefault;
+
+  let html=`
+  <div class="hero">
+    <div class="hero-bg" style="${heroBg}">${heroVideo}</div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">${p.ubicacion||'Colombia'} · ${p.tipo_lugar||''}</div>
+      <h1>${heroTitle}</h1>
+      <p class="hero-desc">${p.tagline||p.descripcion||cp.heroTagDefault}</p>
+      <div class="hero-btns">
+        <a href="#galeria" class="btn-ac">${cp.heroBtn1}</a>
+        <a href="#contacto" class="btn-ow">${cp.heroBtn2}</a>
+      </div>
+    </div>
+  </div>
+  <div class="intro-bg">
+    <div class="intro-inner">
+      <div class="intro-text">
+        <span class="eyebrow">${cp.introEyebrow}</span>
+        <div class="sec-title">${p.nombre}</div>
+        <p>${p.descripcion||cp.heroTagDefault}</p>
+        <p>${cp.introDesc2}</p>
+        <div class="intro-stats">
+          ${statsData.map(s=>'<div class="stat"><div class="stat-num">'+s.num+'</div><div class="stat-lbl">'+s.lbl+'</div></div>').join('')}
+        </div>
+      </div>
+      <div class="intro-img">
+        ${todasFotos.length>1?`<img src="${todasFotos[1]}" alt="${p.nombre}">`:
+          `<img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" alt="${p.nombre}">`}
+        <div class="intro-badge">"${p.tagline||cp.footerTag}"</div>
+      </div>
+    </div>
+  </div>`;
+
+  modulos.forEach(mod=>{
+    if(mod==='galeria'){
+      const cats=Object.keys(fotosPorCategoria).filter(c=>c!=='todas'&&fotosPorCategoria[c].length>0);
+      const tabsExtra=cats.map(c=>`<button class="gtab" data-cat="${c}" onclick="filtrar('${c}',this)">${c.replace('_',' ')}</button>`).join('');
+      html+=`
+      <section id="galeria">
+        <span class="eyebrow">Galería</span>
+        <div class="sec-title">Descubre cada rincón</div>
+        <div class="galeria-tabs">
+          <button class="gtab active" data-cat="todas" onclick="filtrar('todas',this)">Todas</button>
+          ${tabsExtra}
+        </div>
+        <div class="galeria-grid" id="galeriaGrid"></div>
+      </section>`;
+    }
+    if(mod==='amenidades'&&amenidades.length){
+      const aItems=amenidades.map(a=>{
+        const info=AMENIDADES_INFO[a]||{label:a,desc:''};
+        const tieneFotos=fotosPorCategoria[a]&&fotosPorCategoria[a].length>0;
+        const claseExtra=tieneFotos?' amenidad-clickeable':'';
+        const onclickAttr=tieneFotos?' onclick="filtrarDesdeAmenidad(\''+a+'\')"':'';
+        const verFotos=tieneFotos?'<span style="font-size:10px;color:var(--ac);letter-spacing:1px;margin-top:8px;display:block;">Ver fotos →</span>':'';
+        return '<div class="amenidad'+claseExtra+'"'+onclickAttr+'>'
+          +'<span class="amenidad-icon-emoji icon-'+a+'"></span>'
+          +'<h3>'+info.label+'</h3>'
+          +'<p>'+info.desc+'</p>'
+          +verFotos
+          +'</div>';
+      }).join('');
+      html+=`
+      <div class="amenidades-bg">
+        <div class="amenidades-inner">
+          <span class="eyebrow">¿Qué puedes disfrutar aquí?</span>
+          <div class="sec-title">Experiencias para <em>recordar</em></div>
+          <div class="amenidades-grid">${aItems}</div>
+        </div>
+      </div>`;
+    }
+    if(mod==='alojamiento'&&alojamientos.length){
+      const alojItems=alojamientos.map((a,i)=>`
+        <div class="aloj-card">
+          <div class="aloj-card-img">
+            ${todasFotos[i]?`<img src="${todasFotos[i]}" alt="${a.nombre}" style="width:100%;height:100%;object-fit:cover;">`:
+              `<span>foto próximamente</span>`}
+          </div>
+          <div class="aloj-body">
+            <h3>${a.nombre}</h3>
+            <p>Espacio cómodo y bien equipado para tu estadía perfecta.</p>
+            <span class="aloj-tag">${a.capacidad||'consultar'}</span>
+          </div>
+        </div>`).join('');
+      html+=`
+      <section>
+        <span class="eyebrow">Dónde dormir</span>
+        <div class="sec-title">Espacios de <em>descanso</em></div>
+        <div class="aloj-grid">${alojItems}</div>
+      </section>`;
+    }
+    if(mod==='video360'){
+      html+=`
+      <div class="video360-bg" id="video360">
+        <div class="video-inner">
+          <span class="eyebrow">Recorrido virtual</span>
+          <div class="sec-title">Explora como si <em>ya estuvieras aquí</em></div>
+          <p>Recorre cada rincón en 360°. Capturado con Insta360 X5 para vivir la experiencia antes de llegar.</p>
+          <div class="video-container" id="videoContainer">
+            <div class="video-placeholder" onclick="cargarVideo()">
+              <div class="video-overlay"></div>
+              <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--negro)"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+    if(mod==='mapa'){
+      const mapaQuery=p.ubicacion_mapa||p.ubicacion||'Yopal Casanare Colombia';
+      html+=`
+      <div class="mapa-bg">
+        <div class="mapa-inner">
+          <div class="mapa-text">
+            <span class="eyebrow">${cp.mapaEyebrow}</span>
+            <div class="sec-title">${cp.mapaTitulo}</div>
+            <p>${p.ubicacion||'Colombia'}</p>
+            <ul class="mapa-puntos">
+              ${cp.mapaPuntos.map(pt=>'<li>'+pt+'</li>').join('')}
+            </ul>
+            <a href="#contacto" class="btn-ac" style="margin-top:2rem;">${cp.mapaBtn}</a>
+          </div>
+          <div class="mapa-embed">
+            <iframe src="https://maps.google.com/maps?q=${encodeURIComponent(mapaQuery)}&output=embed" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>`;
+    }
+    if(mod==='contacto'){
+      const shareUrl=encodeURIComponent(cp.shareMsg+window.location.href);
+      html+=`
+      <div class="share-strip">
+        <p>Compartir</p>
+        <button class="share-btn" onclick="copiarLink()">Copiar link</button>
+        <a class="share-btn" href="https://wa.me/?text=${shareUrl}" target="_blank">WhatsApp</a>
+      </div>
+      <div class="cta-bg" id="contacto">
+        <span class="eyebrow">${cp.ctaEyebrow}</span>
+        <h2>${cp.ctaH2}</h2>
+        <p class="cta-sub">${cp.ctaSub}</p>
+        <p class="cta-microcopy">${cp.ctaMicro}</p>
+        <div class="cta-btns">
+          <a class="btn-wa" href="${waUrl}" target="_blank">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.625a.75.75 0 00.918.918l5.771-1.476A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.807-.536-5.393-1.471l-.385-.229-3.99 1.021 1.023-3.877-.247-.396A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            ${cp.ctaWa}
+          </a>
+          <button class="btn-ac" onclick="copiarLink()">Compartir este micrositio</button>
+        </div>
+      </div>
+      <footer>
+        <p class="footer-tagline">"${p.tagline||cp.footerTag}"</p>
+        <p>${p.nombre} · ${p.ubicacion||'Colombia'}</p>
+        <p style="margin-top:0.75rem;font-size:10px;letter-spacing:2px;color:rgba(245,242,235,0.2);">Micrositio producido por <a href="https://orbux.site" target="_blank">ORBUX</a> · Fotografía aérea profesional</p>
+      </footer>`;
+    }
+  });
+
+  document.getElementById('contenido').innerHTML=html;
+  if(todasFotos.length)renderGaleria(todasFotos);
+}
+
+function renderEjemplo(){
+  const ejemploP={
+    nombre:'Finca Villa Rica',tipo_lugar:'finca',ubicacion:'Yopal, Casanare',
+    whatsapp:'573133747681',tagline:'Escápate a la tranquilidad del llano',
+    descripcion:'Un refugio campestre con piscina, cabañas y todo lo que necesitas para desconectarte.',
+    color_acento:'dorado',hero_tipo:'imagen',hero_foto:'',video360:'',ubicacion_mapa:'Yopal Casanare',
+    modulos:['galeria','amenidades','alojamiento','video360','mapa','contacto'],
+    amenidades:['piscina','zonas_verdes','bbq','wifi','parking','eventos'],
+    alojamientos:[{nombre:'Cabaña privada',capacidad:'2-4 personas'},{nombre:'Habitación doble',capacidad:'2 personas'}],
+    fotos:[]
+  };
+  aplicarTema('dorado');
+  document.title='Finca Villa Rica · ORBUX';
+  document.getElementById('navLogo').textContent='Finca Villa Rica';
+  todasFotos=[
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80',
+    'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&q=80',
+    'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80',
+    'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80',
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
+  ];
+  fotosPorCategoria={
+    todas:todasFotos,
+    aerea:todasFotos.slice(0,2),
+    espacios:todasFotos.slice(2,4),
+    naturaleza:todasFotos.slice(4),
+    piscina:[todasFotos[1]],
+    zonas_verdes:[todasFotos[2],todasFotos[3]]
+  };
+  const waUrl=`https://wa.me/573133747681?text=${encodeURIComponent('Hola, vi el micrositio y me interesa más información')}`;
+  document.getElementById('waFloat').href=waUrl;
+  renderSecciones(ejemploP,waUrl);
+}
+
+function renderGaleria(urls){
+  const g=document.getElementById('galeriaGrid');
+  if(!g)return;
+  if(!urls||!urls.length){
+    g.innerHTML='<p class="galeria-empty-msg">Fotos próximamente</p>';
+    g.style.display='block';
+    return;
+  }
+  const n=urls.length;
+  // Ajustar grid según cantidad
+  if(n===1){g.style.gridTemplateColumns='1fr';}
+  else if(n===2){g.style.gridTemplateColumns='1fr 1fr';}
+  else{g.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';}
+
+  g.innerHTML=urls.map((url,i)=>{
+    let cls='';
+    // Solo la primera foto ocupa 2 columnas si hay 3+ fotos
+    if(i===0&&n>=3)cls=' style="grid-column:span 2;aspect-ratio:16/9;"';
+    else if(n===1)cls=' style="grid-column:span 1;aspect-ratio:16/9;"';
+    return `<img src="${url}" alt="Foto ${i+1}" loading="lazy" onclick="abrirLightbox('${url}')"${cls}>`;
+  }).join('');
+}
+
+function filtrar(cat,btn){
+  document.querySelectorAll('.gtab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(cat==='todas'){renderGaleria(todasFotos);return;}
+  const filtradas=fotosPorCategoria[cat];
+  if(filtradas&&filtradas.length){renderGaleria(filtradas);}
+  else{renderGaleria(todasFotos);}
+}
+
+function filtrarDesdeAmenidad(cat){
+  const galeria=document.getElementById('galeria');
+  if(galeria)galeria.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>{
+    const tab=document.querySelector(`.gtab[data-cat="${cat}"]`);
+    filtrar(cat,tab);
+  },600);
+}
+
+function cargarVideo(){
+  if(!videoUrl){alert('Video 360° próximamente');return;}
+  const ytId=videoUrl.match(/(?:youtu\.be\/|v=)([^&\?]+)/)?.[1];
+  const c=document.getElementById('videoContainer');
+  if(c&&ytId)c.innerHTML=`<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1" allowfullscreen allow="autoplay"></iframe>`;
+}
+
+function abrirLightbox(url){document.getElementById('lightboxImg').src=url;document.getElementById('lightbox').classList.add('open');}
+function copiarLink(){navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copiado: '+window.location.href));}
+document.getElementById('lightboxClose').onclick=()=>document.getElementById('lightbox').classList.remove('open');
+document.getElementById('lightbox').onclick=(e)=>{if(e.target===e.currentTarget)document.getElementById('lightbox').classList.remove('open');};
+</script>
+</body>
+</html>

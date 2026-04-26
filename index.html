@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORBUX · Fotografía y Video Aéreo · Yopal, Casanare</title>
+<meta name="description" content="Fotografía aérea profesional con dron DJI Air 3S y recorrido virtual 360° con Insta360 X5. Piloto certificado RAC 100 Aerocivil. Yopal, Casanare, Colombia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #2e7cbf;
+    --azul-oscuro: #1a4f7a;
+    --verde: #4a9e5c;
+    --dorado: #c9a84c;
+    --negro: #080c10;
+    --negro2: #0f1419;
+    --negro3: #161d25;
+    --gris: #8a9ab0;
+    --blanco: #f0ede8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 70px;
+    background: rgba(8,12,16,0.92);
+    border-bottom: 1px solid rgba(46,124,191,0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-logo img {
+    height: 44px;
+    width: auto;
+    mix-blend-mode: screen;
+  }
+
+  .nav-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--blanco);
+  }
+
+  .nav-wordmark span { color: var(--azul); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--gris);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--dorado); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 2rem 4rem;
+    position: relative;
+    background: var(--negro);
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(46,124,191,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,124,191,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(46,124,191,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 6px 18px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--dorado);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dorado);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 9vw, 110px);
+    line-height: 0.9;
+    letter-spacing: 4px;
+    color: var(--blanco);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .line-azul { color: var(--azul); display: block; }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--gris);
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.9;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--azul);
+    color: #fff;
+    padding: 14px 32px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    transition: background 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover { background: var(--azul-oscuro); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--dorado);
+    padding: 14px 32px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    border: 1px solid var(--dorado);
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .btn-ghost:hover { background: var(--dorado); color: var(--negro); }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--negro3);
+    border-top: 1px solid rgba(46,124,191,0.15);
+    border-bottom: 1px solid rgba(46,124,191,0.15);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--azul);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gris);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-full {
+    max-width: 100%;
+    padding: 6rem 2rem;
+  }
+
+  .label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--dorado);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    letter-spacing: 3px;
+    color: var(--blanco);
+    margin-bottom: 3rem;
+    line-height: 1;
+  }
+
+  /* SERVICIOS */
+  .servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: rgba(46,124,191,0.15);
+    border: 1px solid rgba(46,124,191,0.15);
+  }
+
+  .servicio-card {
+    background: var(--negro2);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+  }
+
+  .servicio-card:hover { background: var(--negro3); }
+
+  .servicio-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1.5rem;
+  }
+
+  .servicio-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--blanco);
+    margin-bottom: 0.75rem;
+  }
+
+  .servicio-card p {
+    font-size: 13px;
+    color: var(--gris);
+    line-height: 1.8;
+  }
+
+  .servicio-tag {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--azul);
+    border: 1px solid rgba(46,124,191,0.3);
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+
+  /* SECTORES */
+  .sectores-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .sector-card {
+    background: var(--negro3);
+    border: 1px solid rgba(46,124,191,0.12);
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    transition: border-color 0.3s;
+  }
+
+  .sector-card:hover { border-color: rgba(46,124,191,0.4); }
+
+  .sector-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: rgba(46,124,191,0.2);
+    line-height: 1;
+    min-width: 48px;
+  }
+
+  .sector-info h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--blanco);
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .sector-info p {
+    font-size: 13px;
+    color: var(--gris);
+    line-height: 1.7;
+  }
+
+  /* EQUIPO */
+  .equipo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .equipo-card {
+    background: var(--negro3);
+    border: 1px solid rgba(46,124,191,0.15);
+    padding: 2.5rem;
+  }
+
+  .equipo-card .modelo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 3px;
+    color: var(--azul);
+    margin-bottom: 0.25rem;
+  }
+
+  .equipo-card .tipo {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--dorado);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .equipo-specs {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .equipo-specs li {
+    font-size: 13px;
+    color: var(--gris);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .equipo-specs li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--azul);
+    flex-shrink: 0;
+  }
+
+  /* CERTIFICACIONES */
+  .cert-section {
+    background: var(--negro3);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 5rem 2rem;
+  }
+
+  .cert-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .cert-text .section-title { margin-bottom: 1.5rem; }
+
+  .cert-text p {
+    font-size: 14px;
+    color: var(--gris);
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+
+  .cert-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cert-badge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--negro2);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .cert-badge-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cert-badge-info strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dorado);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cert-badge-info span {
+    font-size: 12px;
+    color: var(--gris);
+  }
+
+  /* PROCESO */
+  .proceso-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .proceso-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: rgba(46,124,191,0.3);
+  }
+
+  .paso {
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .paso-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid rgba(46,124,191,0.4);
+    background: var(--negro2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--azul);
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .paso h4 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--blanco);
+    margin-bottom: 0.75rem;
+  }
+
+  .paso p {
+    font-size: 12px;
+    color: var(--gris);
+    line-height: 1.7;
+  }
+
+  /* GALERIA PLACEHOLDER */
+  .galeria-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 240px 240px;
+    gap: 4px;
+  }
+
+  .galeria-item {
+    background: var(--negro3);
+    border: 1px solid rgba(46,124,191,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(138,154,176,0.4);
+    text-transform: uppercase;
+  }
+
+  .galeria-item.main { grid-row: span 2; }
+
+  .galeria-label {
+    font-size: 11px;
+    color: var(--gris);
+    margin-top: 1rem;
+    letter-spacing: 1px;
+  }
+
+  /* GALERIA DINAMICA */
+  .proyectos-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .proyecto-tab {
+    background: transparent;
+    border: 1px solid rgba(46,124,191,0.25);
+    color: var(--gris);
+    padding: 8px 18px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .proyecto-tab.active,
+  .proyecto-tab:hover {
+    background: var(--azul);
+    border-color: var(--azul);
+    color: #fff;
+  }
+
+  .proyecto-info {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .proyecto-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: var(--blanco);
+  }
+
+  .proyecto-ubicacion {
+    font-size: 12px;
+    color: var(--gris);
+    letter-spacing: 1px;
+  }
+
+  .proyecto-ver-360 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--dorado);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 6px 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+
+  .proyecto-ver-360:hover {
+    background: rgba(201,168,76,0.1);
+  }
+
+  .galeria-dinamica {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 6px;
+  }
+
+  .galeria-dinamica img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    border: 1px solid rgba(46,124,191,0.08);
+  }
+
+  .galeria-dinamica img:hover { opacity: 0.8; }
+  .galeria-dinamica img:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+
+  .galeria-empty {
+    grid-column: span 3;
+    padding: 4rem;
+    text-align: center;
+    color: var(--gris);
+    font-size: 13px;
+    letter-spacing: 1px;
+    border: 1px dashed rgba(46,124,191,0.15);
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+  }
+
+  /* CONTACTO */
+  .contacto-section {
+    background: var(--negro2);
+    border-top: 1px solid rgba(46,124,191,0.15);
+  }
+
+  .contacto-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contacto-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 3px;
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+  }
+
+  .contacto-info h2 span { color: var(--azul); display: block; }
+
+  .contacto-info p {
+    font-size: 14px;
+    color: var(--gris);
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--gris);
+  }
+
+  .contact-item svg { flex-shrink: 0; }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: #fff;
+    padding: 14px 28px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    transition: background 0.3s;
+  }
+
+  .btn-whatsapp:hover { background: #1ea855; }
+
+  /* FORM */
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-grid input,
+  .form-grid select,
+  .form-grid textarea {
+    background: var(--negro3);
+    border: 1px solid rgba(46,124,191,0.2);
+    color: var(--blanco);
+    padding: 12px 16px;
+    font-size: 13px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    width: 100%;
+    transition: border-color 0.3s;
+    appearance: none;
+  }
+
+  .form-grid input::placeholder,
+  .form-grid textarea::placeholder { color: rgba(138,154,176,0.5); }
+
+  .form-grid input:focus,
+  .form-grid select:focus,
+  .form-grid textarea:focus {
+    outline: none;
+    border-color: var(--azul);
+  }
+
+  .form-grid select option { background: var(--negro3); }
+
+  .form-grid textarea { resize: vertical; min-height: 120px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--negro);
+    border-top: 1px solid rgba(46,124,191,0.1);
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: var(--gris);
+  }
+
+  .footer-logo span { color: var(--azul); }
+
+  footer p {
+    font-size: 11px;
+    color: rgba(138,154,176,0.5);
+    letter-spacing: 1px;
+  }
+
+  .footer-cert {
+    font-size: 11px;
+    color: var(--dorado);
+    letter-spacing: 1px;
+    opacity: 0.7;
+  }
+
+  /* HERO LOGO */
+  .hero-logo-wrap {
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-logo-img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    animation: logoFloat 4s ease-in-out infinite;
+  }
+
+  .hero-logo-ring {
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    border: 1px solid rgba(46,124,191,0.3);
+    animation: ringPulse 3s ease-in-out infinite;
+  }
+
+  .hero-logo-ring2 {
+    position: absolute;
+    inset: -32px;
+    border-radius: 50%;
+    border: 1px solid rgba(46,124,191,0.15);
+    animation: ringPulse 3s ease-in-out infinite 0.5s;
+  }
+
+  .hero-logo-ring3 {
+    position: absolute;
+    inset: -50px;
+    border-radius: 50%;
+    border: 1px solid rgba(46,124,191,0.07);
+    animation: ringPulse 3s ease-in-out infinite 1s;
+  }
+
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes ringPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.05); }
+  }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .stats-bar { gap: 2rem; }
+    .sectores-grid { grid-template-columns: 1fr; }
+    .equipo-grid { grid-template-columns: 1fr; }
+    .cert-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .proceso-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .proceso-steps::before { display: none; }
+    .galeria-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .galeria-item.main { grid-row: span 1; }
+    .contacto-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="160" height="48" viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg">
+      <style>
+        .nl{font-family:Arial Black,Arial,sans-serif;font-weight:900;font-size:148px;dominant-baseline:middle;text-anchor:middle;}
+        .ns{paint-order:stroke fill;fill:#111;stroke:#111;stroke-width:10px;stroke-linejoin:round;}
+        .ni{paint-order:stroke fill;fill:#111;stroke:#fff;stroke-width:5px;stroke-linejoin:round;}
+        .ntag{font-family:Arial,sans-serif;font-weight:300;font-size:15px;fill:#888;text-anchor:middle;letter-spacing:3.5px;}
+      </style>
+      <text x="62"  y="112" class="nl ns">O</text><text x="62"  y="112" class="nl ni">O</text>
+      <text x="178" y="112" class="nl ns">R</text><text x="178" y="112" class="nl ni">R</text>
+      <text x="292" y="112" class="nl ns">B</text><text x="292" y="112" class="nl ni">B</text>
+      <text x="410" y="112" class="nl ns">U</text><text x="410" y="112" class="nl ni">U</text>
+      <g transform="translate(558,112)">
+        <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)" fill="#111" stroke="#111" stroke-width="9"/>
+        <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)"  fill="#111" stroke="#111" stroke-width="9"/>
+        <circle cx="-50" cy="-50" r="20" fill="#111" stroke="#111" stroke-width="9"/>
+        <circle cx="50"  cy="-50" r="20" fill="#111" stroke="#111" stroke-width="9"/>
+        <circle cx="-50" cy="50"  r="20" fill="#111" stroke="#111" stroke-width="9"/>
+        <circle cx="50"  cy="50"  r="20" fill="#111" stroke="#111" stroke-width="9"/>
+      </g>
+      <g transform="translate(558,112)">
+        <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)" fill="none" stroke="#fff" stroke-width="4"/>
+        <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)"  fill="none" stroke="#fff" stroke-width="4"/>
+        <circle cx="-50" cy="-50" r="20" fill="none" stroke="#fff" stroke-width="4"/>
+        <circle cx="50"  cy="-50" r="20" fill="none" stroke="#fff" stroke-width="4"/>
+        <circle cx="-50" cy="50"  r="20" fill="none" stroke="#fff" stroke-width="4"/>
+        <circle cx="50"  cy="50"  r="20" fill="none" stroke="#fff" stroke-width="4"/>
+      </g>
+      <g transform="translate(558,112)" fill="#00AAFF">
+        <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)"/>
+        <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)"/>
+        <circle cx="-50" cy="-50" r="20"/><circle cx="50" cy="-50" r="20"/>
+        <circle cx="-50" cy="50"  r="20"/><circle cx="50" cy="50"  r="20"/>
+      </g>
+      <g transform="translate(508,62) rotate(20)">
+        <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+        <ellipse cx="13"  cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+        <circle cx="0" cy="0" r="3.5" fill="#111" stroke="#fff" stroke-width="2" paint-order="stroke fill"/>
+      </g>
+      <g transform="translate(608,62) rotate(-35)">
+        <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+        <ellipse cx="13"  cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+        <circle cx="0" cy="0" r="3.5" fill="#111" stroke="#fff" stroke-width="2" paint-order="stroke fill"/>
+      </g>
+      <g transform="translate(508,162) rotate(55)">
+        <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+        <ellipse cx="13"  cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+        <circle cx="0" cy="0" r="3.5" fill="#111" stroke="#fff" stroke-width="2" paint-order="stroke fill"/>
+      </g>
+      <g transform="translate(608,162) rotate(-10)">
+        <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+        <ellipse cx="13"  cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+        <circle cx="0" cy="0" r="3.5" fill="#111" stroke="#fff" stroke-width="2" paint-order="stroke fill"/>
+      </g>
+      <line x1="200" y1="198" x2="480" y2="198" stroke="#555" stroke-width="0.75"/>
+      <text x="340" y="228" class="ntag">IMÁGENES QUE GENERAN VALOR</text>
+    </svg>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#servicios">servicios</a></li>
+    <li><a href="#equipo">equipo</a></li>
+    <li><a href="#sectores">sectores</a></li>
+    <li><a href="#contacto">contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div style="margin-bottom:2rem;">
+      <svg width="480" height="190" viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg" style="max-width:90vw;">
+        <style>
+          .hl{font-family:Arial Black,Arial,sans-serif;font-weight:900;font-size:148px;dominant-baseline:middle;text-anchor:middle;}
+          .hs{paint-order:stroke fill;fill:#111;stroke:#111;stroke-width:10px;stroke-linejoin:round;}
+          .hi{paint-order:stroke fill;fill:#111;stroke:#ffffff;stroke-width:5px;stroke-linejoin:round;}
+          .htag{font-family:Arial,sans-serif;font-weight:300;font-size:15px;fill:#666;text-anchor:middle;letter-spacing:3.5px;}
+        </style>
+        <text x="62"  y="112" class="hl hs">O</text><text x="62"  y="112" class="hl hi">O</text>
+        <text x="178" y="112" class="hl hs">R</text><text x="178" y="112" class="hl hi">R</text>
+        <text x="292" y="112" class="hl hs">B</text><text x="292" y="112" class="hl hi">B</text>
+        <text x="410" y="112" class="hl hs">U</text><text x="410" y="112" class="hl hi">U</text>
+        <g transform="translate(558,112)">
+          <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)" fill="#111" stroke="#111" stroke-width="9"/>
+          <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)"  fill="#111" stroke="#111" stroke-width="9"/>
+          <circle cx="-50" cy="-50" r="20" fill="#111" stroke="#111" stroke-width="9"/>
+          <circle cx="50"  cy="-50" r="20" fill="#111" stroke="#111" stroke-width="9"/>
+          <circle cx="-50" cy="50"  r="20" fill="#111" stroke="#111" stroke-width="9"/>
+          <circle cx="50"  cy="50"  r="20" fill="#111" stroke="#111" stroke-width="9"/>
+        </g>
+        <g transform="translate(558,112)">
+          <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)" fill="none" stroke="#fff" stroke-width="4"/>
+          <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)"  fill="none" stroke="#fff" stroke-width="4"/>
+          <circle cx="-50" cy="-50" r="20" fill="none" stroke="#fff" stroke-width="4"/>
+          <circle cx="50"  cy="-50" r="20" fill="none" stroke="#fff" stroke-width="4"/>
+          <circle cx="-50" cy="50"  r="20" fill="none" stroke="#fff" stroke-width="4"/>
+          <circle cx="50"  cy="50"  r="20" fill="none" stroke="#fff" stroke-width="4"/>
+        </g>
+        <g transform="translate(558,112)" fill="#00AAFF">
+          <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)"/>
+          <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)"/>
+          <circle cx="-50" cy="-50" r="20"/><circle cx="50" cy="-50" r="20"/>
+          <circle cx="-50" cy="50"  r="20"/><circle cx="50" cy="50"  r="20"/>
+        </g>
+        <g transform="translate(508,62) rotate(20)">
+          <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+          <ellipse cx="13"  cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+          <circle cx="0" cy="0" r="3.5" fill="#111" stroke="#fff" stroke-width="2" paint-order="stroke fill"/>
+        </g>
+        <g transform="translate(608,62) rotate(-35)">
+          <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+          <ellipse cx="13"  cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+          <circle cx="0" cy="0" r="3.5" fill="#111" stroke="#fff" stroke-width="2" paint-order="stroke fill"/>
+        </g>
+        <g transform="translate(508,162) rotate(55)">
+          <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+          <ellipse cx="13"  cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+          <circle cx="0" cy="0" r="3.5" fill="#111" stroke="#fff" stroke-width="2" paint-order="stroke fill"/>
+        </g>
+        <g transform="translate(608,162) rotate(-10)">
+          <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+          <ellipse cx="13"  cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+          <circle cx="0" cy="0" r="3.5" fill="#111" stroke="#fff" stroke-width="2" paint-order="stroke fill"/>
+        </g>
+        <line x1="200" y1="198" x2="480" y2="198" stroke="#333" stroke-width="0.75"/>
+        <text x="340" y="228" class="htag">IMÁGENES QUE GENERAN VALOR</text>
+      </svg>
+    </div>
+    <div class="hero-badge">Piloto certificado · RAC 100 Aerocivil</div>
+    <h1>
+      VISIÓN
+      <span class="line-azul">AÉREA</span>
+      PROFESIONAL
+    </h1>
+    <p class="hero-sub">Fotografía y video con dron 4K · Recorrido virtual 360°<br>Yopal, Casanare — Colombia</p>
+    <div class="hero-btns">
+      <a href="#contacto" class="btn-primary">solicitar cotización</a>
+      <a href="#servicios" class="btn-ghost">ver servicios</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">4K</div>
+    <div class="stat-label">resolución video</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">360°</div>
+    <div class="stat-label">recorrido virtual</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">RAC</div>
+    <div class="stat-label">100 Aerocivil</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">48H</div>
+    <div class="stat-label">entrega material</div>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="label fade-up">lo que hacemos</div>
+  <div class="section-title fade-up">servicios</div>
+  <div class="servicios-grid fade-up">
+    <div class="servicio-card">
+      <svg class="servicio-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="14" width="36" height="26" rx="2" stroke="#2e7cbf" stroke-width="1.5"/>
+        <circle cx="24" cy="27" r="7" stroke="#2e7cbf" stroke-width="1.5"/>
+        <path d="M18 14l3-6h6l3 6" stroke="#2e7cbf" stroke-width="1.5"/>
+        <circle cx="36" cy="20" r="2" fill="#2e7cbf"/>
+      </svg>
+      <h3>Fotografía aérea</h3>
+      <p>Imágenes en alta resolución desde perspectivas únicas imposibles desde tierra. Ideal para mostrar propiedades, terrenos y entornos naturales.</p>
+      <span class="servicio-tag">DJI Air 3S · 4K</span>
+    </div>
+    <div class="servicio-card">
+      <svg class="servicio-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="12" width="32" height="24" rx="2" stroke="#2e7cbf" stroke-width="1.5"/>
+        <path d="M36 20l8-5v18l-8-5V20z" stroke="#2e7cbf" stroke-width="1.5"/>
+        <circle cx="20" cy="24" r="4" stroke="#4a9e5c" stroke-width="1.5"/>
+      </svg>
+      <h3>Video cinematográfico</h3>
+      <p>Secuencias dinámicas con movimientos suaves y progresivos. Tomas en hora dorada, panorámicas y órbitas alrededor de la propiedad.</p>
+      <span class="servicio-tag">Video 4K/60fps</span>
+    </div>
+    <div class="servicio-card">
+      <svg class="servicio-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="18" stroke="#2e7cbf" stroke-width="1.5"/>
+        <ellipse cx="24" cy="24" rx="10" ry="18" stroke="#2e7cbf" stroke-width="1.5"/>
+        <line x1="6" y1="24" x2="42" y2="24" stroke="#2e7cbf" stroke-width="1.5"/>
+        <line x1="24" y1="6" x2="24" y2="42" stroke="#4a9e5c" stroke-width="1"/>
+      </svg>
+      <h3>Recorrido virtual 360°</h3>
+      <p>Tour inmersivo con Insta360 X5. El cliente recorre el espacio desde cualquier dispositivo antes de visitarlo físicamente.</p>
+      <span class="servicio-tag">Insta360 X5</span>
+    </div>
+    <div class="servicio-card">
+      <svg class="servicio-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="8" width="36" height="28" rx="2" stroke="#2e7cbf" stroke-width="1.5"/>
+        <line x1="14" y1="40" x2="34" y2="40" stroke="#2e7cbf" stroke-width="1.5"/>
+        <line x1="24" y1="36" x2="24" y2="40" stroke="#2e7cbf" stroke-width="1.5"/>
+        <path d="M14 18h20M14 24h14" stroke="#4a9e5c" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <h3>Micrositio web</h3>
+      <p>Entrega un sitio profesional con galería, video 360° y formulario de contacto. Con link propio, listo para compartir en redes sociales.</p>
+      <span class="servicio-tag">Incluido en el paquete</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORES -->
+<section id="sectores" style="padding-top: 0">
+  <div class="label fade-up">a quién servimos</div>
+  <div class="section-title fade-up">sectores</div>
+  <div class="sectores-grid fade-up">
+    <div class="sector-card">
+      <div class="sector-num">01</div>
+      <div class="sector-info">
+        <h3>Hoteles y resorts</h3>
+        <p>Muestra instalaciones, piscinas, zonas comunes y entorno natural desde el aire. Contenido que convierte visitas en reservas.</p>
+      </div>
+    </div>
+    <div class="sector-card">
+      <div class="sector-num">02</div>
+      <div class="sector-info">
+        <h3>Fincas y quintas</h3>
+        <p>Espacios para eventos, glamping y turismo rural. El recorrido 360° permite que los clientes evalúen el espacio sin desplazarse.</p>
+      </div>
+    </div>
+    <div class="sector-card">
+      <div class="sector-num">03</div>
+      <div class="sector-info">
+        <h3>Sitios turísticos</h3>
+        <p>Atractivos naturales, parques, ríos y paisajes del Casanare y los Llanos. Contenido para operadores turísticos y entes de gobierno.</p>
+      </div>
+    </div>
+    <div class="sector-card">
+      <div class="sector-num">04</div>
+      <div class="sector-info">
+        <h3>Inmobiliaria</h3>
+        <p>Lotes, casas, fincas productivas. Perspectiva aérea que muestra accesos, linderos y entorno. Vende más rápido con mejores imágenes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section id="equipo" style="padding-top: 0">
+  <div class="label fade-up">tecnología de vuelo</div>
+  <div class="section-title fade-up">equipo profesional</div>
+  <div class="equipo-grid fade-up">
+    <div class="equipo-card">
+      <div class="modelo">DJI Air 3S</div>
+      <div class="tipo">Dron principal</div>
+      <ul class="equipo-specs">
+        <li>Video 4K a 60fps con HDR</li>
+        <li>Sensor 1 pulgada — mayor detalle en sombras y luces</li>
+        <li>Detección de obstáculos omnidireccional</li>
+        <li>Hasta 46 min de vuelo por batería</li>
+        <li>Zoom óptico 3x sin pérdida de calidad</li>
+        <li>Estabilización de 3 ejes — video completamente suave</li>
+      </ul>
+    </div>
+    <div class="equipo-card">
+      <div class="modelo">Insta360 X5</div>
+      <div class="tipo">Cámara 360°</div>
+      <ul class="equipo-specs">
+        <li>Video 360° en 8K — máxima inmersión</li>
+        <li>Foto 360° en 72MP</li>
+        <li>Estabilización FlowState integrada</li>
+        <li>Compatible con YouTube y visores VR</li>
+        <li>Recorridos virtuales para web y redes sociales</li>
+        <li>Edición en app — entrega rápida al cliente</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICACIONES -->
+<div class="cert-section" id="certificaciones">
+  <div class="cert-inner">
+    <div class="cert-text fade-up">
+      <div class="label">operación legal y segura</div>
+      <div class="section-title">Certificado y<br>habilitado para volar</div>
+      <p>Todos los vuelos se realizan bajo la normativa aeronáutica colombiana, con permisos vigentes y seguro de responsabilidad civil. Su propiedad está en manos de un profesional autorizado por la Aerocivil.</p>
+    </div>
+    <div class="cert-badges fade-up">
+      <div class="cert-badge">
+        <div class="cert-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l3 7h7l-6 4.5 2.5 7L12 16.5 5.5 20.5 8 13.5 2 9h7z" stroke="#c9a84c" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="cert-badge-info">
+          <strong>Certificado RAC 100</strong>
+          <span>Aerocivil · República de Colombia</span>
+        </div>
+      </div>
+      <div class="cert-badge">
+        <div class="cert-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="#c9a84c" stroke-width="1.5"/>
+            <path d="M8 12l3 3 5-5" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="cert-badge-info">
+          <strong>Piloto profesional habilitado</strong>
+          <span>Idoneidad comprobada · Operación legal</span>
+        </div>
+      </div>
+      <div class="cert-badge">
+        <div class="cert-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#c9a84c" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="cert-badge-info">
+          <strong>Operación asegurada</strong>
+          <span>Responsabilidad civil · Vuelo seguro</span>
+        </div>
+      </div>
+      <div class="cert-badge">
+        <div class="cert-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="#c9a84c" stroke-width="1.5"/>
+            <path d="M12 7v5l3 3" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cert-badge-info">
+          <strong>Entrega en 48 horas</strong>
+          <span>Material editado y listo para publicar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESO -->
+<section>
+  <div class="label fade-up" style="text-align:center">cómo trabajamos</div>
+  <div class="section-title fade-up" style="text-align:center;margin-bottom:4rem">proceso simple</div>
+  <div class="proceso-steps fade-up">
+    <div class="paso">
+      <div class="paso-num">01</div>
+      <h4>Consulta</h4>
+      <p>Cuéntanos tu propiedad y objetivo. Definimos el plan de vuelo y el tipo de material necesario.</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">02</div>
+      <h4>Vuelo</h4>
+      <p>Sesión fotográfica y de video en sitio. Captura aérea con dron y recorrido 360° interior y exterior.</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">03</div>
+      <h4>Edición</h4>
+      <p>Procesamos y editamos el material. Color, estabilización, corte de video y selección de mejores imágenes.</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">04</div>
+      <h4>Entrega</h4>
+      <p>Fotos en alta resolución, video 4K y micrositio web con link propio. Todo en 48 horas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section style="padding-top:0" id="portafolio">
+  <div class="label fade-up">portafolio</div>
+  <div class="section-title fade-up">galería de proyectos</div>
+  <div class="proyectos-tabs fade-up" id="proyectosTabs"></div>
+  <div class="proyecto-info fade-up" id="proyectoInfo"></div>
+  <div class="galeria-dinamica fade-up" id="galeriaDinamica"></div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&#x2715;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- CONTACTO -->
+<div class="contacto-section" id="contacto">
+  <div class="contacto-inner">
+    <div class="contacto-info fade-up">
+      <div class="label">hablemos</div>
+      <h2>SOLICITA TU<br><span>COTIZACIÓN</span></h2>
+      <p>Cubrimos Yopal, Casanare y zonas cercanas de los Llanos Orientales. Cotización sin costo, respuesta en menos de 2 horas.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#2e7cbf"/>
+          </svg>
+          Yopal, Casanare — Colombia
+        </div>
+        <div class="contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="#2e7cbf"/>
+          </svg>
+          313 374 7681
+        </div>
+        <div class="contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="#2e7cbf"/>
+          </svg>
+          orbux.site
+        </div>
+      </div>
+      <a href="https://wa.me/573133747681?text=Hola,%20vi%20su%20página%20y%20me%20interesa%20una%20cotización%20de%20fotografía%20aérea" class="btn-whatsapp" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.625a.75.75 0 00.918.918l5.771-1.476A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.807-.536-5.393-1.471l-.385-.229-3.99 1.021 1.023-3.877-.247-.396A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+        WhatsApp directo
+      </a>
+    </div>
+
+    <form class="form-grid fade-up" action="https://formspree.io/f/xgorvrdo" method="POST">
+      <div class="form-row">
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="text" name="contacto" placeholder="WhatsApp o correo" required>
+      </div>
+      <select name="tipo_propiedad">
+        <option value="" disabled selected>Tipo de propiedad</option>
+        <option>Hotel / resort</option>
+        <option>Finca / quinta</option>
+        <option>Sitio turístico</option>
+        <option>Inmobiliaria</option>
+        <option>Otro</option>
+      </select>
+      <select name="servicio">
+        <option value="" disabled selected>Servicio de interés</option>
+        <option>Fotografía aérea</option>
+        <option>Video cinematográfico</option>
+        <option>Recorrido virtual 360°</option>
+        <option>Paquete completo (foto + video + micrositio)</option>
+      </select>
+      <textarea name="mensaje" placeholder="Cuéntanos sobre tu propiedad y lo que necesitas..."></textarea>
+      <button type="submit" class="btn-primary" style="width:100%;padding:16px">enviar solicitud</button>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ORBUX<span>.site</span></div>
+  <p>Yopal, Casanare · Colombia · 313 374 7681</p>
+  <div class="footer-cert">RAC 100 · Aerocivil certificado · Imágenes que generan valor</div>
+</footer>
+
+<script>
+document.querySelectorAll('.fade-up').forEach(el => {
+  el.style.opacity = '1';
+  el.style.transform = 'none';
+});
+
+window.addEventListener('load', function() {
+  const canvas = document.getElementById('droneCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+
+  const cx = W / 2;
+  const arcCenterY = H + 20;
+  const arcRadius = H * 0.95;
+  let t = 0;
+
+  
+  
+
+  
+
+  const svgLogo = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="490 40 140 140">
+    <g transform="translate(558,112)">
+      <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)" fill="#111" stroke="#111" stroke-width="9"/>
+      <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)" fill="#111" stroke="#111" stroke-width="9"/>
+      <circle cx="-50" cy="-50" r="20" fill="#111" stroke="#111" stroke-width="9"/>
+      <circle cx="50" cy="-50" r="20" fill="#111" stroke="#111" stroke-width="9"/>
+      <circle cx="-50" cy="50" r="20" fill="#111" stroke="#111" stroke-width="9"/>
+      <circle cx="50" cy="50" r="20" fill="#111" stroke="#111" stroke-width="9"/>
+    </g>
+    <g transform="translate(558,112)">
+      <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)" fill="none" stroke="#fff" stroke-width="4"/>
+      <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)" fill="none" stroke="#fff" stroke-width="4"/>
+      <circle cx="-50" cy="-50" r="20" fill="none" stroke="#fff" stroke-width="4"/>
+      <circle cx="50" cy="-50" r="20" fill="none" stroke="#fff" stroke-width="4"/>
+      <circle cx="-50" cy="50" r="20" fill="none" stroke="#fff" stroke-width="4"/>
+      <circle cx="50" cy="50" r="20" fill="none" stroke="#fff" stroke-width="4"/>
+    </g>
+    <g transform="translate(558,112)" fill="#00AAFF">
+      <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(-45)"/>
+      <rect x="-63" y="-17" width="126" height="34" rx="5" transform="rotate(45)"/>
+      <circle cx="-50" cy="-50" r="20"/><circle cx="50" cy="-50" r="20"/>
+      <circle cx="-50" cy="50" r="20"/><circle cx="50" cy="50" r="20"/>
+    </g>
+    <g transform="translate(508,62) rotate(20)">
+      <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+      <ellipse cx="13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+    </g>
+    <g transform="translate(608,62) rotate(-35)">
+      <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+      <ellipse cx="13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+    </g>
+    <g transform="translate(508,162) rotate(55)">
+      <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+      <ellipse cx="13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+    </g>
+    <g transform="translate(608,162) rotate(-10)">
+      <ellipse cx="-13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+      <ellipse cx="13" cy="0" rx="12" ry="4.5" fill="#111" stroke="#fff" stroke-width="2.5" paint-order="stroke fill"/>
+    </g>
+  </svg>`;
+
+  const blob = new Blob([svgLogo], {type: 'image/svg+xml'});
+  const url = URL.createObjectURL(blob);
+  
+  img.src = url;
+  const logoSize = 110;
+
+  img.onload = function() {
+    animate();
+  };
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    t += 0.012;
+    const progress = (Math.sin(t - Math.PI/2) + 1) / 2;
+    const angle = Math.PI + progress * Math.PI;
+    const x = cx + arcRadius * Math.cos(angle);
+    const y = arcCenterY + arcRadius * Math.sin(angle);
+
+    ctx.beginPath();
+    ctx.arc(cx, arcCenterY, arcRadius, Math.PI, 0, false);
+    ctx.strokeStyle = 'rgba(0,170,255,0.15)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 8]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    [40, 58, 76].forEach((r, i) => {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(0,170,255,${0.18 - i * 0.05})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    });
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.drawImage(img, -logoSize/2, -logoSize/2, logoSize, logoSize);
+    ctx.restore();
+
+    requestAnimationFrame(animate);
+  }
+});
+
+/* ================================================
+   PORTAFOLIO — AGREGA TUS PROYECTOS AQUÍ
+   1. Sube fotos a cloudinary.com
+   2. Copia la URL de cada foto
+   3. Pégala en el array "fotos" del proyecto
+   4. Re-sube la carpeta a Netlify
+   ================================================ */
+const API = 'https://orbux-backend.onrender.com/api';
+let proyectos = [];
+let proyectoActivo = 0;
+
+async function cargarProyectos() {
+  try {
+    const res = await fetch(`${API}/proyectos`);
+    proyectos = await res.json();
+    if (!proyectos.length) {
+      document.getElementById('proyectosTabs').innerHTML = '';
+      document.getElementById('proyectoInfo').innerHTML = '';
+      document.getElementById('galeriaDinamica').innerHTML = '<div style="color:var(--gris);font-size:13px;padding:2rem 0;">Proyectos próximamente</div>';
+      return;
+    }
+    renderTabs();
+    renderInfo();
+    renderGaleria();
+  } catch {
+    document.getElementById('galeriaDinamica').innerHTML = '<div style="color:var(--gris);font-size:13px;padding:2rem 0;">Cargando proyectos...</div>';
+  }
+}
+
+function renderTabs() {
+  const tabs = document.getElementById('proyectosTabs');
+  if (!tabs) return;
+  tabs.innerHTML = proyectos.map((p, i) =>
+    `<button class="proyecto-tab ${i===proyectoActivo?'active':''}" onclick="cambiarProyecto(${i})">${p.nombre}</button>`
+  ).join('');
+}
+
+function renderInfo() {
+  const info = document.getElementById('proyectoInfo');
+  if (!info) return;
+  const p = proyectos[proyectoActivo];
+  const slug = slugify(p.nombre);
+  info.innerHTML = `
+    <div class="proyecto-nombre">${p.nombre}</div>
+    <div class="proyecto-ubicacion">${p.ubicacion || ''}</div>
+    <a href="/proyecto.html?id=${p.id}" class="proyecto-ver-360" style="background:rgba(201,168,76,0.1);">Ver micrositio completo →</a>
+    ${p.video360 ? `<a href="${p.video360}" target="_blank" class="proyecto-ver-360">Ver recorrido 360°</a>` : ''}
+  `;
+}
+
+function renderGaleria() {
+  const g = document.getElementById('galeriaDinamica');
+  if (!g) return;
+  const p = proyectos[proyectoActivo];
+  const fotos = p.fotos || [];
+  if (!fotos.length) {
+    g.innerHTML = '<div class="galeria-empty">Fotos del proyecto próximamente</div>';
+    return;
+  }
+  g.innerHTML = fotos.map((f, i) =>
+    `<img src="${f.url}" alt="${p.nombre} ${i+1}" loading="lazy" onclick="abrirLightbox('${f.url}')">`
+  ).join('');
+}
+
+function cambiarProyecto(i) {
+  proyectoActivo = i;
+  renderTabs();
+  renderInfo();
+  renderGaleria();
+}
+
+function slugify(str) {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-');
+}
+
+function abrirLightbox(url) {
+  document.getElementById('lightboxImg').src = url;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+document.getElementById('lightboxClose').onclick = () =>
+  document.getElementById('lightbox').classList.remove('open');
+
+document.getElementById('lightbox').onclick = (e) => {
+  if (e.target === e.currentTarget)
+    document.getElementById('lightbox').classList.remove('open');
+};
+
+cargarProyectos();
+
+
+</script>
+
+</body>
+</html>
