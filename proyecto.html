@@ -11,8 +11,12 @@
   --ac:#c9a84c; --ac2:#b8952e;
   --negro:#0d0f0a; --negro2:#141710; --negro3:#1c2018;
   --gris:#8a9a80; --blanco:#f5f2eb;
-  /* Nuevas variables de sistema */
-  --radius-sm:6px; --radius-md:12px; --radius-lg:20px;
+  /* [1] Colores de texto WCAG AA — ratio mínimo 4.5:1 sobre fondo oscuro */
+  --texto-primario:rgba(245,242,235,0.95);   /* ~15:1 */
+  --texto-secundario:rgba(245,242,235,0.75); /* ~9:1  */
+  --texto-terciario:rgba(245,242,235,0.55);  /* ~6:1  */
+  /* Sistema de diseño */
+  --radius-sm:4px; --radius-md:8px; --radius-lg:16px; /* [2] Bordes más sutiles */
   --shadow-sm:0 4px 16px rgba(0,0,0,0.25);
   --shadow-md:0 12px 32px rgba(0,0,0,0.35);
   --shadow-lg:0 24px 56px rgba(0,0,0,0.5);
@@ -39,11 +43,10 @@ html{scroll-behavior:smooth;}
 /* [1] Fondo con profundidad — elimina negro plano */
 body{
   background:radial-gradient(ellipse at top,#161810 0%,var(--negro) 65%);
-  color:rgba(245,242,235,0.92);
+  color:var(--texto-primario);
   font-family:'Lato',sans-serif;
-  font-weight:300;
+  font-weight:400;
   overflow-x:hidden;
-  /* [3] Tipografía base mínima 16px — WCAG AA */
   font-size:16px;
   line-height:1.75;
 }
@@ -117,7 +120,16 @@ section{padding:var(--section-padding) 2.5rem;max-width:1200px;margin:0 auto;}
 /* INTRO */
 .intro-bg{background:var(--negro2);padding:var(--section-padding) 2.5rem;}
 .intro-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
-.intro-text p{font-size:16px;color:rgba(245,242,235,0.78);line-height:1.9;margin-bottom:1rem;}
+.intro-text p{font-size:16px;color:var(--texto-secundario);line-height:1.9;margin-bottom:1rem;}
+
+/* [6] Letter-spacing en sec-title para aire de marca de lujo */
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.75rem,3.5vw,2.6rem);
+  font-weight:400;margin-bottom:1.75rem;color:#fff;
+  letter-spacing:0.02em;
+}
+.sec-title em{font-style:italic;color:var(--ac);}
 
 /* [6] Stats con tarjetas estructuradas */
 .intro-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:2rem;}
@@ -185,9 +197,9 @@ section{padding:var(--section-padding) 2.5rem;max-width:1200px;margin:0 auto;}
 /* [9] MAPA — min-height para evitar bloque vacío */
 .mapa-bg{background:var(--negro2);padding:var(--section-padding) 2.5rem;}
 .mapa-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:3.5rem;align-items:center;}
-.mapa-text p{font-size:15px;color:rgba(245,242,235,0.72);line-height:1.9;margin-bottom:1rem;}
+.mapa-text p{font-size:15px;color:var(--texto-secundario);line-height:1.9;margin-bottom:1rem;}
 .mapa-puntos{list-style:none;margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}
-.mapa-puntos li{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(245,242,235,0.65);}
+.mapa-puntos li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--texto-secundario);}
 .mapa-puntos li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ac);flex-shrink:0;}
 .mapa-embed{
   overflow:hidden;
@@ -212,8 +224,8 @@ section{padding:var(--section-padding) 2.5rem;max-width:1200px;margin:0 auto;}
 .cta-bg{background:var(--negro2);border-top:1px solid rgba(201,168,76,0.15);padding:var(--section-padding) 2.5rem;text-align:center;}
 .cta-bg h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:400;line-height:1.1;margin-bottom:1.25rem;color:#fff;}
 .cta-bg h2 em{font-style:italic;color:var(--ac);}
-.cta-sub{font-size:16px;color:rgba(245,242,235,0.65);max-width:460px;margin:0 auto 0.75rem;line-height:1.9;}
-.cta-microcopy{font-size:13px;color:rgba(245,242,235,0.38);margin-bottom:2.5rem;letter-spacing:1px;}
+.cta-sub{font-size:16px;color:var(--texto-secundario);max-width:460px;margin:0 auto 0.75rem;line-height:1.9;}
+.cta-microcopy{font-size:13px;color:var(--texto-terciario);margin-bottom:2.5rem;letter-spacing:1px;}
 .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
 
 /* WhatsApp CTA inferior — dorado, sin verde */
@@ -230,19 +242,26 @@ section{padding:var(--section-padding) 2.5rem;max-width:1200px;margin:0 auto;}
 .btn-wa svg path{fill:#111;}
 .btn-wa:hover{opacity:0.88;transform:translateY(-2px);box-shadow:var(--shadow-md);}
 
-/* [4] Hero overlay más profundo — texto más elegante */
+/* [4] Overlay cinematográfico — garantiza legibilidad en cualquier calibración */
 .hero-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(
-    to top,
-    rgba(13,15,10,0.98) 0%,
-    rgba(13,15,10,0.65) 40%,
-    rgba(13,15,10,0.25) 70%,
-    rgba(13,15,10,0.08) 100%
-  );
+  background:
+    linear-gradient(to top,rgba(13,15,10,0.98) 0%,rgba(13,15,10,0.6) 40%,rgba(13,15,10,0.2) 75%,rgba(13,15,10,0.05) 100%),
+    linear-gradient(to bottom,rgba(13,15,10,0.4) 0%,transparent 30%); /* protege logo en top */
 }
-
-/* [5] WhatsApp flotante — tamaño más presencia, no tímido */
+.hero-content{position:relative;z-index:2;max-width:680px;}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:4px;color:var(--ac);text-transform:uppercase;margin-bottom:1.5rem;}
+.hero-tag::before{content:'';width:28px;height:1px;background:var(--ac);}
+/* [3] H1 fluido + letter-spacing de marca de lujo */
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,7vw,5.5rem);
+  font-weight:400;line-height:1.05;
+  margin-bottom:1.25rem;color:#fff;
+  letter-spacing:0.02em; /* +0.02em = aire de marca premium */
+}
+.hero h1 em{font-style:italic;color:var(--ac);}
+.hero-desc{font-size:clamp(15px,2vw,17px);color:var(--texto-secundario);line-height:1.85;max-width:460px;margin-bottom:2.5rem;font-weight:400;}
 .wa-float{
   position:fixed;bottom:2rem;right:2rem;z-index:300;
   width:56px;height:56px;border-radius:50%;
@@ -264,18 +283,18 @@ section{padding:var(--section-padding) 2.5rem;max-width:1200px;margin:0 auto;}
 /* [3] CTA final — reducir a 2 botones, simplificar decisión */
 .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
 
-/* [6] Footer más presencia */
 footer{
   padding:3.5rem 2.5rem;
   text-align:center;
   border-top:1px solid rgba(255,255,255,0.08);
   background:var(--negro2);
 }
-footer p{font-size:12px;color:rgba(245,242,235,0.4);letter-spacing:1px;line-height:1.8;}
+footer p{font-size:13px;color:var(--texto-terciario);letter-spacing:1px;line-height:1.8;}
 footer .footer-tagline{
   font-family:'Playfair Display',serif;
   font-size:18px;font-style:italic;
-  color:rgba(245,242,235,0.65);
+  color:var(--texto-secundario);
+  letter-spacing:0.02em;
   margin-bottom:1rem;
 }
 footer a{color:var(--ac);text-decoration:none;}
@@ -305,8 +324,14 @@ footer a:hover{opacity:0.8;}
   transition:transform 0.35s ease,opacity 0.35s ease,background 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease;
 }
 
-/* Legibilidad — textos descriptivos font-weight 400 */
-.intro-text p,.mapa-text p,.video-inner p,.aloj-body p,.hero-desc{font-weight:400;}
+/* Legibilidad — textos descriptivos font-weight 400 y WCAG */
+.intro-text p,.mapa-text p,.video-inner p,.aloj-body p,.hero-desc{
+  font-weight:400;
+  color:var(--texto-secundario);
+}
+.stat-lbl{font-size:10px;letter-spacing:2px;color:var(--texto-terciario);text-transform:uppercase;margin-top:2px;}
+.amenidad p{font-size:12px;color:var(--texto-terciario);line-height:1.6;}
+.share-strip p{font-size:10px;letter-spacing:2px;color:var(--texto-terciario);text-transform:uppercase;}
 
 /* RESPONSIVE */
 @media(max-width:768px){
