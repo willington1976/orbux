@@ -1,0 +1,9 @@
+# Redirige slugs amigables al micrositio
+# Ejemplo: /hotel-luna-roja → /proyecto.html?slug=hotel-luna-roja
+/:slug  /proyecto.html?slug=:slug  200!
+
+# Evita que archivos reales sean interceptados
+/js/*           /js/:splat        200
+/admin.html     /admin.html       200
+/catalogo.html  /catalogo.html    200
+/index.html     /index.html       200

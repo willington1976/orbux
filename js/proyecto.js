@@ -4,7 +4,7 @@
 //            constructores de DOM sin innerHTML masivo
 // ============================================================
 
-import { getProyectos } from './api.js';
+import { getProyectos, getProyectoPorSlug } from './api.js';
 import { parseJSON, getTipoGrupo, getParam, buildWaUrl, copyToClipboard } from './utils.js';
 import { TEMAS, COPY } from './data.js';
 import { WA_DEFAULT } from './config.js';
@@ -20,8 +20,14 @@ let fotosPorCategoria = {};
 let videoUrl          = '';
 
 // ─── BOOT ────────────────────────────────────────────────────
-const proyectoId = getParam('id');
-proyectoId ? cargarProyecto() : renderEjemplo();
+const proyectoId  = getParam('id');
+const proyectoSlug = getParam('slug');
+
+if (proyectoId || proyectoSlug) {
+  cargarProyecto();
+} else {
+  renderEjemplo();
+}
 bindEventosEstaticos();
 
 // ─── EVENTOS ESTÁTICOS ───────────────────────────────────────
@@ -37,8 +43,17 @@ function bindEventosEstaticos() {
 // ─── CARGA ───────────────────────────────────────────────────
 async function cargarProyecto() {
   try {
-    const proyectos = await getProyectos();
-    const p = proyectos.find(x => x.id == proyectoId);
+    let p;
+
+    if (proyectoSlug) {
+      // URL amigable: /hotel-luna-roja
+      p = await getProyectoPorSlug(proyectoSlug);
+    } else {
+      // URL clásica: /proyecto.html?id=2
+      const proyectos = await getProyectos();
+      p = proyectos.find(x => x.id == proyectoId);
+    }
+
     if (!p) { renderEjemplo(); return; }
 
     // --- Lógica de negocio pura (sin DOM) ---

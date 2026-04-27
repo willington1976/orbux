@@ -224,7 +224,10 @@ function crearCardProyecto(p) {
   // Link micrositio
   const linkDiv = document.createElement('div');
   linkDiv.className = 'link-micrositio';
-  linkDiv.innerHTML = `Link del cliente: <a href="/proyecto.html?id=${p.id}" target="_blank">orbux.site/proyecto.html?id=${p.id}</a>`;
+  const urlMicrositio = p.slug
+    ? `https://orbux.site/${p.slug}`
+    : `/proyecto.html?id=${p.id}`;
+  linkDiv.innerHTML = `Link del cliente: <a href="${urlMicrositio}" target="_blank">${urlMicrositio}</a>`;
 
   card.append(hdr, fotosRow, linkDiv);
   return card;

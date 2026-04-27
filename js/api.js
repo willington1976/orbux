@@ -43,6 +43,10 @@ export async function getProyectos() {
   return request('/proyectos');
 }
 
+export async function getProyectoPorSlug(slug) {
+  return request(`/proyectos/slug/${slug}`);
+}
+
 export async function createProyecto(data) {
   return request('/proyectos', {
     method: 'POST',
