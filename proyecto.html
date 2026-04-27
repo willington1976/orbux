@@ -206,41 +206,74 @@ section{padding:var(--section-padding) 2.5rem;max-width:1200px;margin:0 auto;}
 .cta-microcopy{font-size:13px;color:rgba(245,242,235,0.38);margin-bottom:2.5rem;letter-spacing:1px;}
 .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
 
-/* WhatsApp en CTA — mantiene verde pero integrado */
-.btn-wa{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:17px 34px;font-size:14px;font-weight:700;letter-spacing:0.5px;text-decoration:none;font-family:'Lato',sans-serif;text-transform:uppercase;transition:var(--transition);border-radius:var(--radius-sm);}
-.btn-wa:hover{background:#1ea855;transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.3);}
+/* [1] WhatsApp CTA inferior — integrado al branding, sin verde */
+.btn-wa{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--ac),var(--ac2));
+  color:var(--negro);
+  padding:17px 34px;font-size:14px;font-weight:700;
+  letter-spacing:0.5px;text-decoration:none;
+  font-family:'Lato',sans-serif;text-transform:uppercase;
+  transition:var(--transition);border-radius:var(--radius-sm);
+}
+.btn-wa:hover{opacity:0.88;transform:translateY(-2px);box-shadow:var(--shadow-md);}
 
-/* SHARE */
-.share-strip{background:var(--negro3);padding:1.25rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;}
-.share-strip p{font-size:11px;letter-spacing:2px;color:rgba(245,242,235,0.4);text-transform:uppercase;}
-.share-btn{background:none;border:1px solid rgba(201,168,76,0.2);color:var(--ac);padding:7px 16px;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;transition:var(--transition);text-decoration:none;display:inline-block;border-radius:var(--radius-sm);}
-.share-btn:hover{background:rgba(201,168,76,0.08);}
+/* [4] Hero overlay más profundo — texto más elegante */
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(13,15,10,0.98) 0%,
+    rgba(13,15,10,0.65) 40%,
+    rgba(13,15,10,0.25) 70%,
+    rgba(13,15,10,0.08) 100%
+  );
+}
 
-/* FOOTER */
-footer{padding:2.5rem;text-align:center;border-top:1px solid rgba(255,255,255,0.06);}
-footer p{font-size:11px;color:rgba(245,242,235,0.3);letter-spacing:1px;}
-footer .footer-tagline{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:rgba(245,242,235,0.5);margin-bottom:0.75rem;}
-footer a{color:var(--ac);text-decoration:none;}
-
-/* [3] WhatsApp flotante — integrado al branding */
+/* [5] WhatsApp flotante — tamaño más presencia, no tímido */
 .wa-float{
   position:fixed;bottom:2rem;right:2rem;z-index:300;
-  width:58px;height:58px;border-radius:50%;
-  /* Fondo oscuro + borde sutil — no rompe paleta */
-  background:rgba(18,20,16,0.88);
-  border:1px solid rgba(255,255,255,0.1);
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(18,20,16,0.9);
+  border:1px solid rgba(255,255,255,0.12);
   backdrop-filter:blur(12px);
   display:flex;align-items:center;justify-content:center;
   text-decoration:none;
   box-shadow:var(--shadow-md);
   transition:var(--transition);
 }
+.wa-float svg{width:26px;height:26px;}
 .wa-float:hover{
-  background:#25D366; /* verde solo en hover */
+  background:#25D366;
   transform:translateY(-4px);
-  box-shadow:0 12px 32px rgba(37,211,102,0.35);
+  box-shadow:0 12px 32px rgba(37,211,102,0.4);
 }
-/* Sin animación pulsante — más elegante */
+
+/* [3] CTA final — reducir a 2 botones, simplificar decisión */
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+
+/* [6] Footer más presencia */
+footer{
+  padding:3.5rem 2.5rem;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,0.08);
+  background:var(--negro2);
+}
+footer p{font-size:12px;color:rgba(245,242,235,0.4);letter-spacing:1px;line-height:1.8;}
+footer .footer-tagline{
+  font-family:'Playfair Display',serif;
+  font-size:18px;font-style:italic;
+  color:rgba(245,242,235,0.65);
+  margin-bottom:1rem;
+}
+footer a{color:var(--ac);text-decoration:none;}
+footer a:hover{opacity:0.8;}
+
+/* SHARE — más discreto, sin competir con el CTA */
+.share-strip{background:var(--negro3);padding:1rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.04);}
+.share-strip p{font-size:10px;letter-spacing:2px;color:rgba(245,242,235,0.3);text-transform:uppercase;}
+.share-btn{background:none;border:1px solid rgba(201,168,76,0.15);color:rgba(245,242,235,0.5);padding:6px 14px;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;transition:var(--transition);text-decoration:none;display:inline-block;border-radius:var(--radius-sm);}
+.share-btn:hover{color:var(--ac);border-color:rgba(201,168,76,0.35);}
 
 /* LIGHTBOX */
 .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:999;align-items:center;justify-content:center;}
@@ -249,16 +282,9 @@ footer a{color:var(--ac);text-decoration:none;}
 .lightbox-close{position:fixed;top:1.5rem;right:2rem;color:#fff;font-size:28px;cursor:pointer;background:none;border:none;opacity:0.7;transition:var(--transition);}
 .lightbox-close:hover{opacity:1;}
 
-/* [7] SCROLL REVEAL — microinteracción elegante */
-.reveal{
-  opacity:0;
-  transform:translateY(24px);
-  transition:opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
 
 /* RESPONSIVE */
 @media(max-width:768px){
@@ -271,9 +297,8 @@ footer a{color:var(--ac);text-decoration:none;}
   .mapa-embed{height:280px;}
   section{padding:var(--section-padding) 1.5rem;}
   .intro-bg,.amenidades-bg,.video360-bg,.mapa-bg,.cta-bg{padding:var(--section-padding) 1.5rem;}
-  /* CTAs apilados en móvil */
-  .hero-btns,.cta-btns{flex-direction:column;align-items:flex-start;}
-  .cta-btns{align-items:center;}
+  .hero-btns{flex-direction:column;align-items:flex-start;}
+  .cta-btns{flex-direction:column;align-items:center;}
   .btn-ac,.btn-ow,.btn-wa{width:100%;justify-content:center;}
 }
 
