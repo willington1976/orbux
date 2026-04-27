@@ -197,6 +197,7 @@ function montarSecciones(p, waUrl) {
   // Bind eventos dinámicos después de montar
   bindEventosDinamicos();
   if (todasFotos.length) renderGaleria(todasFotos);
+  activarScrollReveal();
 }
 
 // ─── EVENTOS DINÁMICOS ────────────────────────────────────────
@@ -215,6 +216,25 @@ function bindEventosDinamicos() {
 
   document.getElementById('btnCompartir')
     ?.addEventListener('click', handleCopiarLink);
+}
+
+// ─── SCROLL REVEAL ───────────────────────────────────────────
+function activarScrollReveal() {
+  const targets = document.querySelectorAll(
+    '.intro-inner, .amenidad, .aloj-card, .stat, .mapa-inner, .cta-bg, .video-inner'
+  );
+  targets.forEach(el => el.classList.add('reveal'));
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  targets.forEach(el => observer.observe(el));
 }
 
 // ─── GALERÍA ─────────────────────────────────────────────────
