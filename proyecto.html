@@ -199,13 +199,9 @@ footer a{color:var(--ac);text-decoration:none;}
   <img id="lightboxImg" src="" alt="">
 </div>
 
-<script>
-const API='https://orbux-backend.onrender.com/api';
-const params=new URLSearchParams(window.location.search);
-const proyectoId=params.get('id');
-let p=null;
-let todasFotos=[];
-let videoUrl='';
+<script type="module" src="js/proyecto.js"></script>
+</body>
+</html>
 
 const AMENIDADES_INFO={
   piscina:{label:'Piscina',desc:'Refréscate rodeado de naturaleza'},
