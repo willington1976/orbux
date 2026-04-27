@@ -174,6 +174,18 @@ export const COPY = {
 };
 
 // ---------- HINTS ADMIN ----------
+export const ALOJ_TITLE = {
+  turismo:      'Tipos de alojamiento',
+  inmobiliaria: 'Espacios del inmueble',
+  vehiculos:    'Versiones disponibles',
+};
+
+export const ALOJ_HINT = {
+  turismo:      'Nombre · Capacidad. Ej: Cabaña privada / 2-4 personas',
+  inmobiliaria: 'Tipo · Detalle. Ej: Habitación principal / Con baño propio',
+  vehiculos:    'Versión · Detalle. Ej: Full equipo / Color negro',
+};
+
 export const STATS_PLACEHOLDER = {
   turismo:      [{n:'5',l:'Cabañas'},{n:'3ha',l:'Hectáreas'},{n:'20',l:'Personas máx'}],
   inmobiliaria: [{n:'120',l:'m²'},{n:'3',l:'Habitaciones'},{n:'2',l:'Baños'},{n:'5',l:'Estrato'}],
