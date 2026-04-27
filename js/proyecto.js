@@ -20,15 +20,27 @@ let fotosPorCategoria = {};
 let videoUrl          = '';
 
 // ─── BOOT ────────────────────────────────────────────────────
-const proyectoId  = getParam('id');
+const proyectoId   = getParam('id');
 const proyectoSlug = getParam('slug');
 
 if (proyectoId || proyectoSlug) {
+  mostrarLoading();
   cargarProyecto();
 } else {
   renderEjemplo();
 }
 bindEventosEstaticos();
+
+// ─── LOADING SCREEN ──────────────────────────────────────────
+function mostrarLoading() {
+  document.getElementById('contenido').innerHTML = `
+    <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--negro,#0d0f0a);gap:2rem;">
+      <div style="font-family:'Playfair Display',serif;font-size:28px;letter-spacing:4px;color:#c9a84c;">ORBUX</div>
+      <div style="width:40px;height:40px;border:2px solid rgba(201,168,76,0.2);border-top-color:#c9a84c;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+    </div>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+  `;
+}
 
 // ─── EVENTOS ESTÁTICOS ───────────────────────────────────────
 function bindEventosEstaticos() {
