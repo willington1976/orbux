@@ -191,12 +191,22 @@ section{padding:var(--section-padding) 2.5rem;max-width:1200px;margin:0 auto;}
 .mapa-puntos li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ac);flex-shrink:0;}
 .mapa-embed{
   overflow:hidden;
-  min-height:280px;height:420px;
+  min-height:320px;height:440px;
   border-radius:var(--radius-lg);
   box-shadow:var(--shadow-lg);
-  background:var(--negro3); /* fallback si iframe demora */
+  background:var(--negro3);
+  position:relative;
 }
-.mapa-embed iframe{width:100%;height:100%;border:none;filter:grayscale(25%) invert(88%) hue-rotate(180deg);}
+.mapa-embed::before{
+  content:'📍 Cargando mapa...';
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;letter-spacing:2px;
+  color:rgba(245,242,235,0.25);
+  text-transform:uppercase;
+  pointer-events:none;
+}
+.mapa-embed iframe{position:relative;z-index:1;width:100%;height:100%;border:none;filter:grayscale(25%) invert(88%) hue-rotate(180deg);}
 
 /* CTA FINAL */
 .cta-bg{background:var(--negro2);border-top:1px solid rgba(201,168,76,0.15);padding:var(--section-padding) 2.5rem;text-align:center;}
@@ -206,16 +216,18 @@ section{padding:var(--section-padding) 2.5rem;max-width:1200px;margin:0 auto;}
 .cta-microcopy{font-size:13px;color:rgba(245,242,235,0.38);margin-bottom:2.5rem;letter-spacing:1px;}
 .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
 
-/* [1] WhatsApp CTA inferior — integrado al branding, sin verde */
+/* WhatsApp CTA inferior — dorado, sin verde */
 .btn-wa{
   display:inline-flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,var(--ac),var(--ac2));
-  color:var(--negro);
+  background:linear-gradient(135deg,#c8a24d,#ddb85d);
+  color:#111;
   padding:17px 34px;font-size:14px;font-weight:700;
   letter-spacing:0.5px;text-decoration:none;
   font-family:'Lato',sans-serif;text-transform:uppercase;
-  transition:var(--transition);border-radius:var(--radius-sm);
+  transition:transform 0.35s ease,opacity 0.35s ease,box-shadow 0.35s ease;
+  border-radius:var(--radius-sm);
 }
+.btn-wa svg path{fill:#111;}
 .btn-wa:hover{opacity:0.88;transform:translateY(-2px);box-shadow:var(--shadow-md);}
 
 /* [4] Hero overlay más profundo — texto más elegante */
@@ -285,6 +297,16 @@ footer a:hover{opacity:0.8;}
 /* SCROLL REVEAL */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
+
+/* Microinteracciones unificadas */
+.btn-ac,.btn-ow,.btn-wa,.nav-cta,
+.amenidad,.aloj-card,.stat,.gtab,
+.share-btn,.lightbox-close,.play-btn{
+  transition:transform 0.35s ease,opacity 0.35s ease,background 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease;
+}
+
+/* Legibilidad — textos descriptivos font-weight 400 */
+.intro-text p,.mapa-text p,.video-inner p,.aloj-body p,.hero-desc{font-weight:400;}
 
 /* RESPONSIVE */
 @media(max-width:768px){
