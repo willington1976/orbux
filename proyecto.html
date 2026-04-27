@@ -300,7 +300,33 @@ footer .footer-tagline{
 footer a{color:var(--ac);text-decoration:none;}
 footer a:hover{opacity:0.8;}
 
-/* SHARE — más discreto, sin competir con el CTA */
+/* Botones navegación mapa */
+.mapa-nav-btns{display:flex;gap:0.75rem;margin-top:2rem;flex-wrap:wrap;}
+.mapa-nav-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 20px;font-size:12px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  text-decoration:none;font-family:'Lato',sans-serif;
+  border:1px solid rgba(201,168,76,0.3);
+  color:var(--ac);background:rgba(201,168,76,0.06);
+  border-radius:var(--radius-sm);
+  transition:transform 0.35s ease,background 0.35s ease,border-color 0.35s ease;
+}
+.mapa-nav-btn:hover{
+  background:rgba(201,168,76,0.14);
+  border-color:var(--ac);
+  transform:translateY(-2px);
+}
+.mapa-nav-btn--waze{
+  border-color:rgba(0,210,255,0.2);
+  color:#00d2ff;
+  background:rgba(0,210,255,0.04);
+}
+.mapa-nav-btn--waze:hover{
+  background:rgba(0,210,255,0.1);
+  border-color:#00d2ff;
+}
+@media(max-width:768px){.mapa-nav-btns{flex-direction:column;}.mapa-nav-btn{justify-content:center;}}
 .share-strip{background:var(--negro3);padding:1rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.04);}
 .share-strip p{font-size:10px;letter-spacing:2px;color:rgba(245,242,235,0.3);text-transform:uppercase;}
 .share-btn{background:none;border:1px solid rgba(201,168,76,0.15);color:rgba(245,242,235,0.5);padding:6px 14px;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Lato',sans-serif;transition:var(--transition);text-decoration:none;display:inline-block;border-radius:var(--radius-sm);}
