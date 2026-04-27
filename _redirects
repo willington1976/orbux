@@ -1,9 +1,5 @@
-# Archivos estáticos — tienen prioridad, NO interceptar
-/js/*          /js/:splat     200
-/admin.html    /admin.html    200
-/catalogo.html /catalogo.html 200
-/index.html    /index.html    200
-/proyecto.html /proyecto.html 200
-
-# Slugs amigables — al final, solo si no coincide nada anterior
-/:slug  /proyecto.html?slug=:slug  200
+/hotel-luna-roja /proyecto.html?slug=hotel-luna-roja-2 200
+/finca-villa-rica /proyecto.html?slug=finca-villa-rica-3 200
+/glamping /proyecto.html?slug=glamping-4 200
+/hotel-el-mirador-campestre /proyecto.html?slug=hotel-el-mirador-campestre-1 200
+/ducati-diavel-v4 /proyecto.html?slug=ducati-diavel-v4-7 200
