@@ -10,7 +10,7 @@ import {
 } from './api.js';
 import { parseJSON, getTipoGrupo } from './utils.js';
 import {
-  AMENIDADES_POR_TIPO, MODULOS_POR_TIPO,
+  AMENIDADES_POR_TIPO, AMENIDADES_INFO, MODULOS_POR_TIPO,
   ALOJ_HINT, ALOJ_TITLE, CATS_LABELS
 } from './data.js';
 
@@ -441,20 +441,21 @@ function selPreset(el) {
 }
 
 function adaptarFormulario(tipo) {
-  const grupo     = getTipoGrupo(tipo);
+  const grupo      = getTipoGrupo(tipo);
   const amenidades = AMENIDADES_POR_TIPO[grupo] || AMENIDADES_POR_TIPO.turismo;
-  const chkGrid   = document.getElementById('amenidadesCheck');
+  const chkGrid    = document.getElementById('amenidadesCheck');
 
   chkGrid.innerHTML = '';
-  amenidades.forEach(a => {
+  amenidades.forEach(key => {
+    const info  = AMENIDADES_INFO[key] || { label: key };
     const label = document.createElement('label');
     label.className = 'chk-item';
     const cb = document.createElement('input');
     cb.type  = 'checkbox';
-    cb.value = a.v;
+    cb.value = key;
     cb.addEventListener('change', () =>
       label.classList.toggle('on', cb.checked));
-    label.append(cb, ` ${a.l}`);
+    label.append(cb, ` ${info.label}`);
     chkGrid.appendChild(label);
   });
 
