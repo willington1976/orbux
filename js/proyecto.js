@@ -8,6 +8,7 @@ import { getProyectos, getProyectoPorSlug } from './api.js';
 import { parseJSON, getTipoGrupo, getParam, buildWaUrl, copyToClipboard } from './utils.js';
 import { TEMAS, COPY } from './data.js';
 import { WA_DEFAULT } from './config.js';
+import { applyTheme } from './themeManager.js';
 import {
   buildHero, buildIntro, buildGaleria, buildAmenidades,
   buildAlojamiento, buildVideo360, buildMapa,
@@ -69,7 +70,7 @@ async function cargarProyecto() {
     if (!p) { renderEjemplo(); return; }
 
     // --- Lógica de negocio pura (sin DOM) ---
-    aplicarTema(p.color_acento || 'dorado');
+    applyTheme(p);
     document.title = `${p.nombre} · ORBUX`;
     document.getElementById('navLogo').textContent = p.nombre;
 
@@ -313,12 +314,6 @@ function cerrarLightbox() {
   document.getElementById('lightbox').classList.remove('open');
 }
 
-// ─── TEMA ─────────────────────────────────────────────────────
-function aplicarTema(color) {
-  document.body.classList.remove(...Object.values(TEMAS));
-  if (TEMAS[color]) document.body.classList.add(TEMAS[color]);
-}
-
 // ─── SHARE ───────────────────────────────────────────────────
 async function handleCopiarLink() {
   await copyToClipboard(window.location.href);
@@ -343,7 +338,7 @@ function renderEjemplo() {
     fotos: [], stats: [],
   };
 
-  aplicarTema('dorado');
+  applyTheme({ preset: 'luxury', color_hex: '#D4AF37' });
   document.title = 'Finca Villa Rica · ORBUX';
   document.getElementById('navLogo').textContent = 'Finca Villa Rica';
 
