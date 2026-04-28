@@ -58,10 +58,16 @@ function bindEvents() {
   document.getElementById('pHeroTipo')
     .addEventListener('change', toggleHeroVideo);
 
-  // Modal — temas visuales
-  document.querySelectorAll('.tema-opt').forEach(el => {
-    el.addEventListener('click', () => selColor(el));
+  // Modal — presets
+  document.querySelectorAll('.preset-opt').forEach(el => {
+    el.addEventListener('click', () => selPreset(el));
   });
+
+  // Modal — color picker
+  document.getElementById('pColorHex')
+    .addEventListener('input', e => {
+      document.getElementById('colorLabel').textContent = e.target.value.toUpperCase();
+    });
 
   // Modal — módulos
   document.querySelectorAll('#modulosGrid input').forEach(c => {
@@ -342,8 +348,10 @@ function abrirModal() {
   document.getElementById('pTipo').value     = 'finca';
   document.getElementById('pHeroTipo').value = 'imagen';
   document.getElementById('heroVideoField').style.display = 'none';
-  document.getElementById('pColorAcento').value = 'dorado';
-  document.querySelectorAll('.tema-opt').forEach((c, i) =>
+  document.getElementById('pPreset').value    = 'luxury';
+  document.getElementById('pColorHex').value  = '#D4AF37';
+  document.getElementById('colorLabel').textContent = '#D4AF37';
+  document.querySelectorAll('.preset-opt').forEach((c, i) =>
     c.classList.toggle('sel', i === 0));
   document.querySelectorAll('#modulosGrid input').forEach(c => {
     c.checked = true;
@@ -371,10 +379,13 @@ function editarProyecto(p) {
   document.getElementById('pHeroTipo').value        = p.hero_tipo     || 'imagen';
   toggleHeroVideo();
 
-  const colorVal = p.color_acento || 'dorado';
-  document.getElementById('pColorAcento').value = colorVal;
-  document.querySelectorAll('.tema-opt').forEach(c =>
-    c.classList.toggle('sel', c.dataset.val === colorVal));
+  const presetVal  = p.preset    || 'luxury';
+  const colorHex   = p.color_hex || '#D4AF37';
+  document.getElementById('pPreset').value   = presetVal;
+  document.getElementById('pColorHex').value = colorHex;
+  document.getElementById('colorLabel').textContent = colorHex.toUpperCase();
+  document.querySelectorAll('.preset-opt').forEach(c =>
+    c.classList.toggle('sel', c.dataset.val === presetVal));
 
   adaptarFormulario(p.tipo_lugar || 'finca');
 
@@ -411,10 +422,22 @@ function toggleHeroVideo() {
     tipo === 'video' ? 'block' : 'none';
 }
 
-function selColor(el) {
-  document.querySelectorAll('.tema-opt').forEach(c => c.classList.remove('sel'));
+// ─── PRESET Y COLOR ──────────────────────────────────────────
+function selPreset(el) {
+  document.querySelectorAll('.preset-opt').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
-  document.getElementById('pColorAcento').value = el.dataset.val;
+  document.getElementById('pPreset').value = el.dataset.val;
+
+  // Color por defecto del preset seleccionado
+  const defaults = {
+    luxury:    '#D4AF37',
+    corporate: '#1A1A1A',
+    eco:       '#2D452F',
+    tech:      '#0666EB',
+  };
+  const color = defaults[el.dataset.val] || '#D4AF37';
+  document.getElementById('pColorHex').value   = color;
+  document.getElementById('colorLabel').textContent = color.toUpperCase();
 }
 
 function adaptarFormulario(tipo) {
@@ -541,6 +564,8 @@ async function guardarProyecto() {
     hero_video:    document.getElementById('pHeroVideo').value,
     hero_tipo:     document.getElementById('pHeroTipo').value,
     color_acento:  document.getElementById('pColorAcento').value,
+    preset:        document.getElementById('pPreset').value,
+    color_hex:     document.getElementById('pColorHex').value,
     video360:      document.getElementById('pVideo360').value,
     ubicacion_mapa:document.getElementById('pUbicacionMapa').value,
     amenidades, modulos, alojamientos, stats, activo: true,
