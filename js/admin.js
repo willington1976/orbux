@@ -63,10 +63,19 @@ function bindEvents() {
     el.addEventListener('click', () => selPreset(el));
   });
 
-  // Modal — color picker
+  // Color picker → actualiza texto
   document.getElementById('pColorHex')
     .addEventListener('input', e => {
-      document.getElementById('colorLabel').textContent = e.target.value.toUpperCase();
+      document.getElementById('colorLabel').value = e.target.value.toUpperCase();
+    });
+
+  // Texto hex → actualiza color picker si es hex válido
+  document.getElementById('colorLabel')
+    .addEventListener('input', e => {
+      const val = e.target.value.trim();
+      if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+        document.getElementById('pColorHex').value = val;
+      }
     });
 
   // Modal — módulos
@@ -350,7 +359,7 @@ function abrirModal() {
   document.getElementById('heroVideoField').style.display = 'none';
   document.getElementById('pPreset').value    = 'luxury';
   document.getElementById('pColorHex').value  = '#D4AF37';
-  document.getElementById('colorLabel').textContent = '#D4AF37';
+  document.getElementById('colorLabel').value = '#D4AF37';
   document.querySelectorAll('.preset-opt').forEach((c, i) =>
     c.classList.toggle('sel', i === 0));
   document.querySelectorAll('#modulosGrid input').forEach(c => {
@@ -383,7 +392,7 @@ function editarProyecto(p) {
   const colorHex   = p.color_hex || '#D4AF37';
   document.getElementById('pPreset').value   = presetVal;
   document.getElementById('pColorHex').value = colorHex;
-  document.getElementById('colorLabel').textContent = colorHex.toUpperCase();
+  document.getElementById('colorLabel').value = colorHex.toUpperCase();
   document.querySelectorAll('.preset-opt').forEach(c =>
     c.classList.toggle('sel', c.dataset.val === presetVal));
 
@@ -437,7 +446,7 @@ function selPreset(el) {
   };
   const color = defaults[el.dataset.val] || '#D4AF37';
   document.getElementById('pColorHex').value   = color;
-  document.getElementById('colorLabel').textContent = color.toUpperCase();
+  document.getElementById('colorLabel').value = color.toUpperCase();
 }
 
 function adaptarFormulario(tipo) {
