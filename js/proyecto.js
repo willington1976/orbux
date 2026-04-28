@@ -22,7 +22,13 @@ let videoUrl          = '';
 
 // ─── BOOT ────────────────────────────────────────────────────
 const proyectoId   = getParam('id');
-const proyectoSlug = getParam('slug');
+const proyectoSlug = getParam('slug') || (() => {
+  // URL limpia tipo /hotel-luna-roja-2 — extraer slug del pathname
+  const path = window.location.pathname.replace(/^\/|\/$/g, '');
+  // Si el path no es una ruta del sistema, usarlo como slug
+  const SYSTEM = ['proyecto', 'admin', 'catalogo', 'index', ''];
+  return SYSTEM.includes(path) ? null : path;
+})();
 
 if (proyectoId || proyectoSlug) {
   mostrarLoading();
