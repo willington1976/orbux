@@ -1515,11 +1515,11 @@ function renderInfo() {
   const info = document.getElementById('proyectoInfo');
   if (!info) return;
   const p = proyectos[proyectoActivo];
-  const slug = slugify(p.nombre);
+    const url = p.slug ? `/${p.slug}` : `/proyecto.html?id=${p.id}`;
   info.innerHTML = `
     <div class="proyecto-nombre">${p.nombre}</div>
     <div class="proyecto-ubicacion">${p.ubicacion || ''}</div>
-    <a href="/proyecto.html?id=${p.id}" class="proyecto-ver-360" style="background:rgba(201,168,76,0.1);">Ver micrositio completo →</a>
+    <a href="${url}" class="proyecto-ver-360" style="background:rgba(201,168,76,0.1);">Ver micrositio completo →</a>
     ${p.video360 ? `<a href="${p.video360}" target="_blank" class="proyecto-ver-360">Ver recorrido 360°</a>` : ''}
   `;
 }
