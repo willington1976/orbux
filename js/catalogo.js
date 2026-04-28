@@ -251,7 +251,7 @@ function crearCard(p) {
   btnVer.textContent = 'Ver detalles →';
   btnVer.addEventListener('click', e => {
     e.stopPropagation();
-    verMicrositio(p.id);
+    verMicrositio(p.slug, p.id);
   });
 
   const btnWa = document.createElement('button');
@@ -271,6 +271,7 @@ function crearCard(p) {
   return card;
 }
 
-function verMicrositio(id) {
-  window.open(`/proyecto.html?id=${id}`, '_blank');
+function verMicrositio(slug, id) {
+  const url = slug ? `/${slug}` : `/proyecto.html?id=${id}`;
+  window.open(url, '_blank');
 }
